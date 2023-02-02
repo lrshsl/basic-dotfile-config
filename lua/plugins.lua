@@ -1,32 +1,58 @@
 vim.cmd([[
 
 call plug#begin()
+  " Themes
+  Plug 'lifepillar/vim-colortemplate'
+  Plug 'chriskempson/base16-vim'
 
-    " File Explorer (ctrl-o)
-    Plug 'kyazdani42/nvim-tree.lua'
-    Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'lambdalisue/suda.vim'
 
-    " Syntax Highlighting
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Language Setup
 
-    " Linting
-    " Plug 'dense-analysis/ale'
+  " Lsp
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
+  " Autocompletion
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'saadparwaiz1/cmp_luasnip'
+  Plug 'hrsh7th/cmp-nvim-lua'
+  " Snippets
+  Plug 'L3MON4D3/LuaSnip'
+  Plug 'rafamadriz/friendly-snippets'
 
-    " Autocompletion
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'nvim-lua/completion-nvim'
+  Plug 'VonHeikemen/lsp-zero.nvim'
 
 
-    " Basic Editor Functionality
-    Plug 'jiangmiao/auto-pairs'         " autoclose bracets & co
+  " File Explorer (ctrl-o)
+  Plug 'kyazdani42/nvim-tree.lua'
+  Plug 'kyazdani42/nvim-web-devicons'
 
-    Plug 'tpope/vim-commentary'         " comment out / uncomment
+  " Fuzzy finder
+  Plug 'junegunn/fzf'
 
-    " Plug 'terryma/vim-multiple-cursors' " multiple cursors (ctrl-n)
-    "Plug 'tpope/vim-surround'
+  " Syntax Highlighting & Linting
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Plug 'dense-analysis/ale'
 
-    Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-    Plug 'junegunn/fzf'
+  " Formater
+  Plug 'Chiel92/vim-autoformat'
+
+  " Basic Editor Functionality
+  Plug 'jiangmiao/auto-pairs'         " autoclose bracets & co
+  "Plug 'tpope/vim-surround'
+
+  " comment out / uncomment
+  Plug 'tpope/vim-commentary'         
+
+  " rgb color preview
+  " Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+  
+  " Further configuration might be required, read https://anoyaro84.github.io/blog/2020/nvim-setting/
+  Plug 'sirver/UltiSnips'
 
 call plug#end()
 ]])
@@ -35,4 +61,11 @@ call plug#end()
 -- Configuration for Plugins
 require("nvimtree")
 require("treesitter")
-require("completionnvim")
+
+local lsp = require('lsp-zero')
+lsp.preset('recommended')
+lsp.set_preferences({
+    set_lsp_keymaps = true,
+    manage_nvim_cmp = true,
+})
+lsp.setup()

@@ -5,10 +5,14 @@ set exrc
 filetype plugin indent on
 syntax enable
 
+
 set termguicolors
 
 set ts=4 sts=4
 set sw=4 et
+
+set background=dark
+"colorscheme x
 
 augroup ME
 	autocmd!
@@ -19,3 +23,4 @@ augroup ME
     autocmd BufRead,BufWrite,BufNewFile Makefile :echom "Makefile recognised. Now using tabs for indent"
 augroup END
 ]])
+
