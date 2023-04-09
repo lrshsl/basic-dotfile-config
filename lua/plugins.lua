@@ -1,71 +1,59 @@
-vim.cmd([[
-
-call plug#begin()
-  " Themes
-  Plug 'lifepillar/vim-colortemplate'
-  Plug 'chriskempson/base16-vim'
-
-  Plug 'lambdalisue/suda.vim'
-
-  " Language Setup
-
-  " Lsp
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'williamboman/mason.nvim'
-  Plug 'williamboman/mason-lspconfig.nvim'
-  " Autocompletion
-  Plug 'hrsh7th/nvim-cmp'
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/cmp-buffer'
-  Plug 'hrsh7th/cmp-path'
-  Plug 'saadparwaiz1/cmp_luasnip'
-  Plug 'hrsh7th/cmp-nvim-lua'
-  " Snippets
-  Plug 'L3MON4D3/LuaSnip'
-  Plug 'rafamadriz/friendly-snippets'
-
-  Plug 'VonHeikemen/lsp-zero.nvim'
 
 
-  " File Explorer (ctrl-o)
-  Plug 'kyazdani42/nvim-tree.lua'
-  Plug 'kyazdani42/nvim-web-devicons'
+require('packer').startup(function(use)
 
-  " Fuzzy finder
-  Plug 'junegunn/fzf'
+	use 'wbthomason/packer.nvim'
 
-  " Syntax Highlighting & Linting
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  " Plug 'dense-analysis/ale'
+	use 'folke/tokyonight.nvim'
 
-  " Formater
-  Plug 'Chiel92/vim-autoformat'
+	use {
+		'nvim-telescope/telescope.nvim', tag = '0.1.x',
+		requires = { {'nvim-lua/plenary.nvim'} }
+	}
 
-  " Basic Editor Functionality
-  Plug 'jiangmiao/auto-pairs'         " autoclose bracets & co
-  "Plug 'tpope/vim-surround'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 
-  " comment out / uncomment
-  Plug 'tpope/vim-commentary'         
+    use 'theprimeagen/harpoon'
 
-  " rgb color preview
-  " Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-  
-  " Further configuration might be required, read https://anoyaro84.github.io/blog/2020/nvim-setting/
-  Plug 'sirver/UltiSnips'
+    -- Lsp
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
+    
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'L3MON4D3/LuaSnip'
 
-call plug#end()
-]])
+    use 'VonHeikemen/lsp-zero.nvim'
+
+    use 'tpope/vim-commentary'
+
+end)
 
 
--- Configuration for Plugins
-require("nvimtree")
-require("treesitter")
+require('plugins_setup')
 
-local lsp = require('lsp-zero')
-lsp.preset('recommended')
-lsp.set_preferences({
-    set_lsp_keymaps = true,
-    manage_nvim_cmp = true,
-})
+
+-- Telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<space>;f', builtin.find_files, {})
+vim.keymap.set('n', '<space>;g', builtin.live_grep, {})
+vim.keymap.set('n', '<space>b', builtin.buffers, {})
+
+
+
+-- Lsp Zero
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
 lsp.setup()
+
+
