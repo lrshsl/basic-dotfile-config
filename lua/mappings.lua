@@ -1,52 +1,37 @@
+
+vim.g.mapleader = " "
+
 vim.cmd([[
 
-inoremap fj <esc>
+" Re-Source nvim.lua
+nnoremap <leader>;s :so ~/.config/nvim/init.lua<CR>
 
-nnoremap <silent> <space>q :qa<CR>
-nnoremap <silent> <space>w :wa<CR>
+nnoremap <leader>;q :Ex<CR>
 
-nnoremap <silent> <Space><Space> :FZF<CR>
-nnoremap <silent> <A-o> :FZF<CR>
-
-" Window Movement
-noremap <silent> <S-h> :wincmd h<CR>
-"noremap <silent> <S-l> :wincmd l<CR>
-noremap <silent> <S-i> :wincmd l<CR>
-
-
-augroup CMD_RUN
-    autocmd!
-    autocmd BufReadPre *.rs,Cargo.* nnoremap <space>r :!cargo run<CR>
-    autocmd BufNewFile,BufRead *.py nnoremap <space>r :!python main.py<CR>
-    autocmd BufReadPre *.c,*.h,*.cpp,*.hh,*.hpp nnoremap <space>r :!make run<CR>
-augroup END
-
-
-" Convenience
-inoremap <C-BS> <C-o>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
 
 
 " Colemak mappings
-
 inoremap tn <esc>
 
-nnoremap n j
-nnoremap e k
-nnoremap k e
-nnoremap K E
-nnoremap i l
 
-nnoremap l i
-nnoremap L I
+noremap n j
+noremap N J
+noremap j n
+noremap J N
 
-vnoremap n j
-vnoremap e k
-vnoremap k e
-vnoremap i l
+noremap e k
+noremap E K
+noremap k e
+noremap K E
 
-vnoremap l i
+noremap i l
+noremap I L
+noremap l i
+noremap L I
 
-nnoremap dn dj
-nnoremap de dk
+
 
 ]])
+
