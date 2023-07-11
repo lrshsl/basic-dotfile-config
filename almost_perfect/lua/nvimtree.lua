@@ -7,6 +7,7 @@ local function my_on_attach(bufnr)
 	api.config.mappings.default_on_attach(bufnr)
 	vim.keymap.set('n', 'r', api.fs.rename_sub, opts('rename'))
 	vim.keymap.del('n', 'e', { buffer = bufnr })
+	vim.keymap.del('n', 'E', { buffer = bufnr })
 end
 
 
