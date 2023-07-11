@@ -3,7 +3,7 @@ vim.cmd([[
 nnoremap <silent> <space>q :q<CR>
 nnoremap <silent> Q :qa<CR>
 nnoremap <silent> <space>w :wa<CR>
-nnoremap <silent> <space>o :NvimTreeToggle<CR>
+nnoremap <silent> <space>;q :NvimTreeToggle<CR>
 " Don't forget harpoon mappings "
 
 nnoremap <silent> <space>;f :FZF<CR>
