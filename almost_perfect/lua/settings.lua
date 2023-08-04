@@ -1,11 +1,18 @@
 vim.cmd([[
 
+" I don't think that's necessary
 set encoding=utf-8
 set exrc
 
 filetype plugin indent on
 syntax enable
 
+" Set python interpreter
+let g:python3_host_prog = '/usr/bin/python3'
+
+
+"set relativenumber number
+set scrolloff=10
 
 " Appearance "
 set guifont=Source\ Code\ Pro\ Light:h7.5
