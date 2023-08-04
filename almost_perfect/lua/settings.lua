@@ -50,7 +50,7 @@ nnoremap <C-x><C-t> :call Toggle_transparent_background()<CR>
 set ts=4 sts=4 sw=4
 
 set foldmethod=marker
-set listchars=tab:-->,trail:~,nbsp:×
+set listchars=tab:-->,trail:.,nbsp:×
 
 augroup ME
     autocmd!
