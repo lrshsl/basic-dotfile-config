@@ -9,6 +9,7 @@ syntax enable
 
 " Appearance "
 set guifont=Source\ Code\ Pro\ Light:h7.5
+set guicursor=a:block-Cursor,r-cr-o:hor20
 
 " Colors "
 set termguicolors
