@@ -7,9 +7,6 @@ return {
 		"MunifTanjim/nui.nvim",
 		-- "3rd/image.nvim",
 	},
-	keys = {
-		{ "<leader>o", "<cmd>Neotree toggle<cr>", desc = "Open Neotree" },
-	},
 	config = {
 		window = {
 			mappings = {
@@ -21,12 +18,17 @@ return {
 				["a"] = {
 					"add",   -- supports brace expansion ("x{a,b,c}" -> xa,xb,xc)
 					config = {
-						show_path = "relative" -- "none", "relative", "absolute"
+						show_path = "absolute" -- "none", "relative", "absolute"
 					}
 				},
 				["e"] = "", -- unmap e
 				["A"] = "add_directory",
-				["m"] = "move",
+				["m"] = {
+					"move",
+					config = {
+						show_path = "absolute"
+					}
+				},
 				["r"] = "rename",
 
 				["d"] = "delete",

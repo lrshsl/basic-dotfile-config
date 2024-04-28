@@ -16,20 +16,24 @@ set termguicolors
 let g:sonokai_transparent_background = 1
 colorscheme sonokai  " AFTER other settings
 
+set nowrap
+
 " Tabs vs Spaces "
-set ts=4 sts=4 sw=4
+set et! ts=4 sts=4 sw=4
 
 set foldmethod=marker
 set listchars=tab:-->,trail:~
 
-augroup ME
+augroup TAB_VS_SPACES_AUGROUP
 	autocmd!
 
-    autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal noexpandtab
-    autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal list listchars+=leadmultispace:---|
-
+    autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal et!
+    autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal list listchars+=leadmultispace:.
     autocmd BufRead,BufWrite,BufNewFile Makefile :echom "Makefile recognised. Now using tabs for indent"
+
     autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp :setlocal et ts=2 sts=2 sw=2
+
+    autocmd BufNewFile,BufRead *.nim :setlocal et ts=2 sts=2 sw=2
 augroup END
 
 

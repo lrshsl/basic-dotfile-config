@@ -27,7 +27,7 @@ return {
 
 			lsp_zero.on_attach(function(_, bufnr)
 				-- see :help lsp-zero-keybindings
-				lsp_zero.default_keymaps({ buffer = bufnr, omit })
+				lsp_zero.default_keymaps({ buffer = bufnr, _ })
 				--- gd -> go to definition
 				--- gD -> go to declaration
 				--- gi -> go to implementation
@@ -53,6 +53,20 @@ return {
 				},
 			})
 
+			require 'lspconfig'.wgsl_analyzer.setup {
+				on_attach = lsp_zero.on_attach,
+				cmd = { 'wgsl_analyzer' },
+				filetypes = { 'wgsl' },
+			}
+
+			require'lspconfig'.nim_language_server.setup{
+				settings = {
+					nim = {
+						nimsuggestPath = "/usr/bin/nimsuggest"
+					}
+				}
+			}
+
 			-- Autocompletion
 			local cmp = require('cmp')
 
@@ -68,7 +82,7 @@ return {
 					['<C-e>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
 					['<C-n>'] = cmp.mapping(function()
 						if cmp.visible() then
-							cmp.select_prev_item({ behavior = 'insert' })
+							cmp.select_next_item({ behavior = 'insert' })
 						else
 							cmp.complete()
 						end

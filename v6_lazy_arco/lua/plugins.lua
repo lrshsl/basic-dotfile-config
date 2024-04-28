@@ -24,6 +24,7 @@ local plugins = {
 	},
 
 	-- Essentials for editing
+	'nvim-treesitter/nvim-treesitter',
 	"tpope/vim-surround",
 	"tpope/vim-repeat",
 	"tpope/vim-commentary",
@@ -32,11 +33,14 @@ local plugins = {
 		config = function() require("autoclose").setup() end
 	},
 
-	-- Space(macs|vim)-like keybinding preview
-	"folke/which-key.nvim",
-
 	-- LSP
 	require "lsp",
+
+	-- Latex
+	require("latex"),
+
+	-- Space(macs|vim)-like keybinding preview
+	"folke/which-key.nvim",
 
 	-- AI helper
 	"exafunction/codeium.vim",
@@ -48,7 +52,11 @@ local plugins = {
 	require "telescope",
 
 	-- Filetree
-	require "neotree"
+	require "neotree",
+
+	require "navigator",
+	"junegunn/goyo.vim",
+	"junegunn/limelight.vim",
 }
 local opts = {}
 
