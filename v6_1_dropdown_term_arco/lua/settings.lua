@@ -9,7 +9,8 @@ syntax enable
 "set nformats=alpha
 
 " Appearance "
-set guifont=Source\ Code\ Pro\ Light:h7.5
+"set guifont=Source\ Code\ Pro\ Light:h7.5
+set guifont=JetBrains\ Mono\ Thin:h7.5
 
 "set colorcolumn=80 
 
