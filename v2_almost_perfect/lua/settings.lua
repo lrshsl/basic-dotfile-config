@@ -1,14 +1,23 @@
 vim.cmd([[
 
+" I don't think that's necessary
 set encoding=utf-8
 set exrc
 
 filetype plugin indent on
 syntax enable
 
+" Set python interpreter
+let g:python3_host_prog = '/usr/bin/python3'
+
+
+"set relativenumber number
+set scrolloff=10
 
 " Appearance "
 set guifont=Source\ Code\ Pro\ Light:h7.5
+set guicursor=n-v-c-i:block
+
 
 " Colors "
 set termguicolors
@@ -48,16 +57,17 @@ nnoremap <C-x><C-t> :call Toggle_transparent_background()<CR>
 set ts=4 sts=4 sw=4
 
 set foldmethod=marker
-set listchars=tab:-->,trail:~
+set listchars=tab:-->,trail:.,nbsp:×
 
 augroup ME
-	autocmd!
+    autocmd!
 
-    autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal noexpandtab
+    autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal et!
     autocmd BufRead,BufWrite,BufNewFile Makefile :setlocal list listchars+=leadmultispace:---|
-
     autocmd BufRead,BufWrite,BufNewFile Makefile :echom "Makefile recognised. Now using tabs for indent"
-    autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp :setlocal et ts=2 sts=2 sw=2
+
+    autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp  :setlocal ts=2 sts=2 sw=2 et
+    autocmd BufNewFile,BufRead *.py,*.rs                 :setlocal ts=4 sts=4 sw=4 et!
 augroup END
 
 
