@@ -1,62 +1,63 @@
-local wk = require("which-key")
+local wk = require'which-key'
 
 --> Prefix mappings
 wk.register({
-    --> File
-    f = {
-        name = "file",
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        a = { "<cmd>Telescope find_files<cr>", "Find All Files" },
-        t = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
-        r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-        h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    },
-    --> Session
-    s = {
-        name = "session",
-        s = { "<cmd>SessionManager save_current_session<cr>", "Save Session" },
-        l = { "<cmd>SessionManager load_session<cr>", "Load Session" },
-        L = { "<cmd>SessionManager load_last_session<cr>", "Load Last Session" },
-        d = { "<cmd>SessionManager delete_session<cr>", "Delete Session" },
-    },
-    --> Lsp
-    c = {
-        name = "code",
-        r = { vim.lsp.buf.rename, "Rename" },
-        h = { vim.lsp.buf.hover, "Hover" },
-        s = { "<cmd>Telescope symbols<cr>", "Search Symbols" },
-        S = { "<cmd>Telescope lsp_document_symbols<cr>", "Search Document Symbols" },
-    },
-    --> File / Buffer navigation
-    o = { "<cmd>Neotree toggle<cr>", "File Tree" },
+  --> File
+  f = {
+    name = "file",
+    f = { "<cmd>Telescope find_files<cr>", "Find File" },
+    a = { "<cmd>Telescope find_files<cr>", "Find All Files" },
+    g = { "<cmd>Telescope live_grep<cr>", "Live grep" },
+    t = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
+    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+  },
+  --> Session
+  s = {
+    name = "session",
+    s = { "<cmd>SessionManager save_current_session<cr>", "Save Session" },
+    l = { "<cmd>SessionManager load_session<cr>", "Load Session" },
+    L = { "<cmd>SessionManager load_last_session<cr>", "Load Last Session" },
+    d = { "<cmd>SessionManager delete_session<cr>", "Delete Session" },
+  },
+  --> Lsp
+  c = {
+    name = "code",
+    r = { vim.lsp.buf.rename, "Rename" },
+    h = { vim.lsp.buf.hover, "Hover" },
+    s = { "<cmd>Telescope symbols<cr>", "Search Symbols" },
+    S = { "<cmd>Telescope lsp_document_symbols<cr>", "Search Document Symbols" },
+  },
+  --> File / Buffer navigation
+  o = { "<cmd>Neotree toggle<cr>", "File Tree" },
 
-    --> Text editing
-    u = { "viw~", "lower <-> UPPER" },
-    U = { "viw~", "lower-word <-> UPPER-WORD" },
-    y = { "~h", "~" },
+  --> Text editing
+  u = { "viw~", "lower <-> UPPER" },
+  U = { "viw~", "lower-word <-> UPPER-WORD" },
+  y = { "~h", "~" },
 
-    --> 
+  --> 
 
-    --> Buffer
-    w = "write buffer",
-    q = "quit buffer",
+  --> Buffer
+  w = "write buffer",
+  q = "quit buffer",
 }, { prefix = "<leader>" })
 
 --> Non prefix mappings
 wk.register {
-    j = "which_key_ignore", -- Colemak remaps
-    h = "Left",
-    n = "Down",
-    e = "Up",
-    i = "Right",
-    l = "Insert",
-    k = "End of word",
-    ["$"] = "which_key_ignore", -- Shift-mappings
-    ["^"] = "which_key_ignore",
-    ["_"] = "which_key_ignore",
-    ["0"] = "Start of line",
-    H = "Start of line (non-blank)",
-    I = "End of line"
+  j = "which_key_ignore", -- Colemak remaps
+  h = "Left",
+  n = "Down",
+  e = "Up",
+  i = "Right",
+  l = "Insert",
+  k = "End of word",
+  ["$"] = "which_key_ignore", -- Shift-mappings
+  ["^"] = "which_key_ignore",
+  ["_"] = "which_key_ignore",
+  ["0"] = "Start of line",
+  H = "Start of line (non-blank)",
+  I = "End of line"
 }
 
 --> LSP
@@ -132,29 +133,43 @@ noremap <C-y> <C-d>
 
 " Run commands "
 nnoremap <space>r :!
+nnoremap <space>;r :lua ToggleTerminal()<CR>
+
 augroup CMD_RUN
-    autocmd!
-    autocmd BufReadPre *.rs,Cargo.* nnoremap <space>;r :!cargo r
-    autocmd BufReadPre *.rs,Cargo.* nnoremap <space>;R :!rustc -o rs.out % && ./rs.out
+   autocmd!
 
-    autocmd BufNewFile,BufRead *.py nnoremap <space>;r :!python %
-	autocmd BufNewFile,BufRead *.js nnoremap <space>;r :!node<space>
-	autocmd BufNewFile,BufRead *.go nnoremap <space>;r :!go run<space>
-	autocmd BufNewFile,BufRead *.lua nnoremap <space>;r :!lua<space>
+   " Rust "
+   autocmd BufReadPre *.rs,Cargo.*               nnoremap <space>;r   :!cargo r
+   autocmd BufReadPre *.rs,Cargo.*               nnoremap <space>;R   :!rustc -o rs.out % && ./rs.out
 
-	autocmd BufNewFile,BufRead *.nim nnoremap <space>;r :!nimble run<space>
-	autocmd BufNewFile,BufRead *.nim nnoremap <space>;R :!nim c -r %
+   " Make | CMake | C | C++ "
+   autocmd BufNewFile,BufRead *.c,*.h,Makefile   nnoremap <space>;r   :!make<space>
+   autocmd BufNewFile,BufRead *.cpp,*.hh,*.hpp   nnoremap <space>;r   :!make<space>
+   autocmd BufNewFile,BufRead *.c,*.h            nnoremap <space>;R   :!gcc -Wall -Wextra -std=c99 -pedantic -o c.out % ; ./c.out
+   autocmd BufNewFile,BufRead *.cpp,*.hh,*.hpp   nnoremap <space>;R   :!g++ -Wall -Wextra -std=c++17 -pedantic -o a.out % ; ./a.out
 
-    autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp,Makefile nnoremap <space>;r :!make<space>
-    autocmd BufNewFile,BufRead *.c,*.h nnoremap <space>;R :!gcc -Wall -Wextra -std=c99 -pedantic -o c.out % ; ./c.out
-	autocmd BufNewFile,BufRead *.cpp,*.hh,*.hpp nnoremap <space>;R :!g++ -Wall -Wextra -std=c++17 -pedantic -o a.out % ; ./a.out
+   " Python, js, go "
+   autocmd BufNewFile,BufRead *.py               nnoremap <space>;r   :!python %
+   autocmd BufNewFile,BufRead *.js               nnoremap <space>;r   :!node<space>
+   autocmd BufNewFile,BufRead *.go               nnoremap <space>;r   :!go run<space>
 
-	autocmd BufNewFile,BufRead *.java nnoremap <space>;r :!gradle deploy
-	autocmd BufNewFile,BufRead *.java nnoremap <space>;B :!gradle build
+   " Lua | Vim "
+   autocmd BufNewFile,BufRead *.lua               nnoremap <space>;r   :!lua<space>
+   autocmd BufNewFile,BufRead *.lua,*.vim         nnoremap <space>;R   :so %
 
-	autocmd BufNewFile,BufRead *.bf nnoremap <space>;r :!bf % && ./a.out
+   " Nim "
+   autocmd BufNewFile,BufRead *.nim               nnoremap <space>;r   :!nimble run --<space>
+   autocmd BufNewFile,BufRead *.nim               nnoremap <space>;R   :!nim c -r %
 
-	autocmd BufNewFile,BufRead *.md nnoremap <space>;r :!pandoc % -o out.pdf
+   " Java && Gradle "
+   autocmd BufNewFile,BufRead *.java            nnoremap <space>;r   :!gradle deploy
+   autocmd BufNewFile,BufRead *.java            nnoremap <space>;B   :!gradle build
+
+   " Br*infuck "
+   autocmd BufNewFile,BufRead *.bf               nnoremap <space>;r   :!bf % && ./a.out
+
+   " Markdown -> PDF "
+   autocmd BufNewFile,BufRead *.md               nnoremap <space>;r   :!pandoc % -o out.pdf
 augroup END
 
 " Resize splits with arrow keys
