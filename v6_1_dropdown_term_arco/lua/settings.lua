@@ -6,7 +6,9 @@ filetype plugin indent on
 syntax enable
 
 " Increment alphanumerical characters with <C-a> and <C-x>
-"set nformats=alpha
+set nrformats=alpha
+
+" Ligature test: -> 1/2 >= 0 |>
 
 " Appearance "
 "set guifont=Source\ Code\ Pro\ Light:h7.5
@@ -25,7 +27,7 @@ set nowrap
 set noet ts=3 sts=3 sw=3
 
 set foldmethod=marker
-set list listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤
+set listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤
 
 augroup TAB_VS_SPACES_AUGROUP
   autocmd!
@@ -41,23 +43,39 @@ augroup TAB_VS_SPACES_AUGROUP
 augroup END
 ]]
 
---- Lambda that executes a vim command
-function VimFn(cmd)
-	return function()
-		vim.cmd(cmd)
-	end
-end
-
 BgTransparent = false
 NumbersOn = false
 
 function ToggleNumbers()
 	if NumbersOn == true then
 		NumbersOn = not NumbersOn
+		vim.opt.number = NumbersOn
 		vim.cmd [[ set nu! rnu! ]]
 	else
 		NumbersOn = not NumbersOn
 		vim.cmd [[ set nu rnu ]]
+	end
+end
+
+function SetFontSizeCurry(val)
+	return function()
+		vim.opt.guifont = "JetBrains Mono Thin:h" .. val
+	end
+end
+
+function BgSetTransparencyCurry(val)
+	if vim.g.neovide then
+		return function()
+			vim.g.neovide_transparency = 1 - val
+		end
+	end
+	return function()
+		print('No known gui detected, transparency might not work properly')
+		if val > 0.5 then
+			vim.cmd [[ hi Normal guibg=#111111 ctermbg=black ]]
+		else
+			vim.cmd [[ hi Normal guibg=NONE ctermbg=NONE ]]
+		end
 	end
 end
 
@@ -71,14 +89,46 @@ function ToggleTransparentBg()
 	end
 end
 
-require 'which-key'.register {
+require 'which-key'.register { --- [which-key-bindings] Settings
 	['<space>,'] = {
 		name = 'Settings',
-		b = {
-			nwme = 'Background',
-			t = { ToggleTransparentBg, 'Toggle transparency' },
-		},
+		v = { ':Vista!!<CR>', 'Vista' },
+		l = { ':Limelight!!<CR>', 'Limelight' },
+		g = { ':Goyo 90%x50%<CR>', 'Goyo' },
+		G = { ':Goyo<CR>', 'Goyo (deactivate)' },
 		n = { ToggleNumbers, 'Toggle line numbers' },
+		b = {
+			name = 'Background',
+			b = { ToggleTransparentBg, 'Toggle transparency' },
+			t = {
+				name = 'Transparency',
+				['`'] = { BgSetTransparencyCurry(0.0), '0' },
+				['1'] = { BgSetTransparencyCurry(0.1), '1' },
+				['2'] = { BgSetTransparencyCurry(0.2), '2' },
+				['3'] = { BgSetTransparencyCurry(0.3), '3' },
+				['4'] = { BgSetTransparencyCurry(0.4), '4' },
+				['5'] = { BgSetTransparencyCurry(0.5), '5' },
+				['6'] = { BgSetTransparencyCurry(0.6), '6' },
+				['7'] = { BgSetTransparencyCurry(0.7), '7' },
+				['8'] = { BgSetTransparencyCurry(0.8), '8' },
+				['9'] = { BgSetTransparencyCurry(0.9), '9' },
+				['0'] = { BgSetTransparencyCurry(1.0), '10' },
+			}
+		},
+		f = {
+			name = 'Font',
+			['`'] = { SetFontSizeCurry(6), '6' },
+			['1'] = { SetFontSizeCurry(7), '7' },
+			['2'] = { SetFontSizeCurry(8), '8' },
+			['3'] = { SetFontSizeCurry(9), '9' },
+			['4'] = { SetFontSizeCurry(10), '10' },
+			['5'] = { SetFontSizeCurry(11), '11' },
+			['6'] = { SetFontSizeCurry(12), '12' },
+			['7'] = { SetFontSizeCurry(13), '13' },
+			['8'] = { SetFontSizeCurry(16), '16' },
+			['9'] = { SetFontSizeCurry(20), '20' },
+			['0'] = { SetFontSizeCurry(30), '30' },
+		},
 		w = {
 			name = 'Whitespace',
 			l = {
@@ -86,7 +136,7 @@ require 'which-key'.register {
 				l = { ':set list!<CR>', 'Toggle' },
 				['2'] = { [[ :set listchars=tab:-->,trail:~,leadmultispace:·\|,nbsp:¤ <CR> ]], '2' },
 				['3'] = { [[ :set listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤ <CR> ]], '3' },
-				['4'] = { [[ :set listchars=tab:--->,trail:~,leadmultispace:···\|,nbsp:¤ <CR> ]], '4' },
+				['4'] = { [[ :set listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤ <CR> ]], '4' },
 			},
 			s = { ':set et <CR>', 'Use spaces' },
 			t = { ':set noet <CR>', 'Use tabs' },
@@ -98,6 +148,7 @@ require 'which-key'.register {
 				['3'] = { ':set ts=3 sts=3 sw=3 <CR>', '3' },
 				['4'] = { ':set ts=4 sts=4 sw=4 <CR>', '4' },
 				['8'] = { ':set ts=8 sts=8 sw=8 <CR>', '8' },
+				n = { ToggleNumbers, 'Toggle line numbers' },
 			}
 		}
 	}

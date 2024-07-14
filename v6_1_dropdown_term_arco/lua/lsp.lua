@@ -28,20 +28,15 @@ return {
 			lsp_zero.on_attach(function(_, bufnr)
 				-- see :help lsp-zero-keybindings
 				lsp_zero.default_keymaps({ buffer = bufnr, _ })
-				--- gd -> go to definition
-				--- gD -> go to declaration
-				--- gi -> go to implementation
-				--- gr -> go to references
-				Nmap('<leader>lh', vim.lsp.buf.hover)
-				Nmap('<leader>lr', vim.lsp.buf.rename)
-				Nmap('<leader>lf', vim.lsp.buf.format)
-				Nmap('<leader>la', vim.lsp.buf.code_action)
 
-				-- Telescope replacements
-				local telescope = require('telescope.builtin')
-				Nmap('<leader>fd', telescope.diagnostics)
-				Nmap('<leader>fs', telescope.lsp_document_symbols)
-				Nmap('<leader>fr', telescope.lsp_references)
+				Nmap('gd', vim.lsp.buf.definition)
+				Nmap('gD', vim.lsp.buf.declaration)
+				Nmap('gi', vim.lsp.buf.implementation)
+				Nmap('gr', vim.lsp.buf.references) -- Also <leader>fr -> Telescope
+				-- Nmap('<leader>lf', vim.lsp.buf.format)
+				-- Nmap('<leader>la', vim.lsp.buf.code_action)
+
+				-- Telescope handles goto stuff in which-key-bindings
 			end)
 			lsp_zero.extend_lspconfig()
 

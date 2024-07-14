@@ -1,64 +1,107 @@
-local wk = require'which-key'
+local wk = require 'which-key'
 
---> Prefix mappings
+--> Prefix mappings [which-key-bindings]
 wk.register({
-  --> File
-  f = {
-    name = "file",
-    f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    a = { "<cmd>Telescope find_files<cr>", "Find All Files" },
-    g = { "<cmd>Telescope live_grep<cr>", "Live grep" },
-    t = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
-    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-  },
-  --> Session
-  s = {
-    name = "session",
-    s = { "<cmd>SessionManager save_current_session<cr>", "Save Session" },
-    l = { "<cmd>SessionManager load_session<cr>", "Load Session" },
-    L = { "<cmd>SessionManager load_last_session<cr>", "Load Last Session" },
-    d = { "<cmd>SessionManager delete_session<cr>", "Delete Session" },
-  },
-  --> Lsp
-  c = {
-    name = "code",
-    r = { vim.lsp.buf.rename, "Rename" },
-    h = { vim.lsp.buf.hover, "Hover" },
-    s = { "<cmd>Telescope symbols<cr>", "Search Symbols" },
-    S = { "<cmd>Telescope lsp_document_symbols<cr>", "Search Document Symbols" },
-  },
-  --> File / Buffer navigation
-  o = { "<cmd>Neotree toggle<cr>", "File Tree" },
+	--> File
+	f = {
+		name = 'file',
+		d = { require 'telescope.builtin'.diagnostics, 'Find diagnostics' },
+		r = { require 'telescope.builtin'.lsp_references, 'Find References' },
+		h = { require 'telescope.builtin'.help_tags, 'Find Help' },
 
-  --> Text editing
-  u = { "viw~", "lower <-> UPPER" },
-  U = { "viw~", "lower-word <-> UPPER-WORD" },
-  y = { "~h", "~" },
+		g = { require 'telescope.builtin'.live_grep, 'Live grep' },
 
-  --> 
+		a = { require 'telescope.builtin'.find_files, 'Find All Files' },
+		t = { require 'telescope.builtin'.buffers, 'Find Buffers' },
+		o = { require 'telescope.builtin'.oldfiles, 'Open Recent File' },
 
-  --> Buffer
-  w = "write buffer",
-  q = "quit buffer",
-}, { prefix = "<leader>" })
+		s = { require 'telescope.builtin'.lsp_document_symbols, 'Find Document Symbols' },
+		S = { require 'telescope.builtin'.symbols, 'Symbols' },
+		w = { require 'telescope.builtin'.dynamic_workspace_symbols, 'Workspace Symbols' },
+	},
+	--> Session
+	s = {
+		name = 'session',
+		s = { require 'session_manager'.save_current_session, 'Save Session' },
+		l = { require 'session_manager'.load_session, 'Load Session' },
+		L = { require 'session_manager'.load_last_session, 'Load Last Session' },
+		d = { require 'session_manager'.delete_session, 'Delete Session' },
+	},
+	--> Lsp
+	c = {
+		name = 'code',
+		a = { vim.lsp.buf.code_action, 'Code Action' },
+		r = { vim.lsp.buf.rename, 'Rename' },
+		h = { vim.lsp.buf.hover, 'Hover' },
+		f = { vim.lsp.buf.format, 'Format' },
+	},
+	--> File / Buffer navigation
+	o = { '<cmd>Neotree toggle<cr>', 'File Tree' },
+
+	--> Text editing
+	u = { 'viw~', 'lower <-> UPPER' },
+	U = { 'viw~', 'lower-word <-> UPPER-WORD' },
+	y = { '~h', '~' },
+
+	-->
+
+	--> Buffer
+	w = 'write buffer',
+	q = 'quit buffer',
+}, { prefix = '<leader>' })
 
 --> Non prefix mappings
 wk.register {
-  j = "which_key_ignore", -- Colemak remaps
-  h = "Left",
-  n = "Down",
-  e = "Up",
-  i = "Right",
-  l = "Insert",
-  k = "End of word",
-  ["$"] = "which_key_ignore", -- Shift-mappings
-  ["^"] = "which_key_ignore",
-  ["_"] = "which_key_ignore",
-  ["0"] = "Start of line",
-  H = "Start of line (non-blank)",
-  I = "End of line"
+	j = 'which_key_ignore', -- Colemak remaps
+	h = 'Left',
+	n = 'Down',
+	e = 'Up',
+	i = 'Right',
+	l = 'Insert',
+	k = 'End of word',
+	['$'] = 'which_key_ignore', -- Shift-mappings
+	['^'] = 'which_key_ignore',
+	['_'] = 'which_key_ignore',
+	['0'] = 'Start of line',
+	H = 'Start of line (non-blank)',
+	I = 'End of line'
 }
+
+wk.register {
+	mode = { 'i' },
+	[';'] = {
+		name = 'Abbreviations',
+		['ae'] = 'ä',
+		['Ae'] = 'Ä',
+		['AE'] = 'Ä',
+
+		['oe'] = 'ö',
+		['Oe'] = 'Ö',
+		['OE'] = 'Ö',
+
+		['ue'] = 'ü',
+		['Ue'] = 'Ü',
+		['UE'] = 'Ü',
+
+		['str'] = { "&'static str" },
+		['l'] = { "'" }, -- Lifetimes (and still getting auto-close for '')
+	}
+}
+
+Imap(';ae', 'ä')
+Imap(';Ae', 'Ä')
+Imap(';AE', 'Ä')
+
+Imap(';oe', 'ö')
+Imap(';Oe', 'Ö')
+Imap(';OE', 'Ö')
+
+Imap(';ue', 'ü')
+Imap(';Ue', 'Ü')
+Imap(';UE', 'Ü')
+
+Imap(';str', "&'static str")
+Imap(';l', "'")
 
 --> LSP
 Imap('<C-space>', vim.lsp.buf.completion)
@@ -100,13 +143,7 @@ Nmap('<space>e', ':wincmd k<CR>')
 --Nmap('<leader>fs', ':Telescope symbols<CR>')
 
 --> Code/text actions
-Nmap('<space>F', ':LspZeroFormat<CR>')
-Nmap('<space>,v', ':Vista<CR>')
-Nmap('<space>,l', ':Limelight<CR>')
-Nmap('<space>,L', ':Limelight!<CR>')
-Nmap('<space>,g', ':Goyo 90%x50%<CR>')
-Nmap('<space>,G', ':Goyo')
-
+--Nmap('<space>F', ':LspZeroFormat<CR>')
 Nmap('<space>r', ':!')
 
 vim.cmd([[
@@ -116,9 +153,26 @@ vim.cmd([[
  noremap <ScrollWheelUp> <C-Y>
  noremap <ScrollWheelDown> <C-E>
 
+" Paste in all modes and editors (neovide) "
+
+" Paste: Emulate middle mouse click
+inoremap <C-v> <MiddleMouse>
+tnoremap <C-v> <MiddleMouse>
+
+" Paste: Emulate middle mouse click
+nnoremap <C-S-v> "+p
+inoremap <C-S-v> <C-o>"+p
+tnoremap <C-S-v> <C-o>"+p
+
+" Paste: Yank to clipboard in visual with Y "
+vnoremap <space>y "+y
+vnoremap Y "+y
+
+
 " Scroll using Ctrl "
-" <C-e> is already mapped
-noremap <C-n> <C-y>
+noremap <C-e> 5<C-e>
+noremap <C-n> 5<C-y>
+
 " <C-u> is already mapped
 noremap <C-y> <C-d>
 
@@ -205,13 +259,16 @@ noremap l i
 noremap I L
 noremap L I
 
+" Needed for some reason
+nnoremap cl cl
+
 " For writing Umlauts "
-inoremap ;ae ä
-inoremap ;oe ö
-inoremap ;ue ü
-inoremap ;Ae Ä
-inoremap ;Oe Ö
-inoremap ;Ue Ü
+"inoremap ;ae ä
+"inoremap ;oe ö
+"inoremap ;ue ü
+"inoremap ;Ae Ä
+"inoremap ;Oe Ö
+"inoremap ;Ue Ü
 
 " Alias beginning and end of line "
 noremap <silent> H ^

@@ -7,7 +7,7 @@ return {
 	end,
 	opts = {
 		triggers_blacklist = {
-			i = { 't' },
+			i = { 't', },
 		}
 	},
 }
