@@ -47,21 +47,22 @@ return {
 					lsp_zero.default_setup,
 				},
 			})
-            local lspconfig = require'lspconfig'
+
+			local lspconfig = require 'lspconfig'
 			lspconfig.wgsl_analyzer.setup {
 				on_attach = lsp_zero.on_attach,
 				cmd = { 'wgsl_analyzer' },
 				filetypes = { 'wgsl' },
 			}
 
-			lspconfig.nim_langserver.setup{
+			lspconfig.nim_langserver.setup {
 				settings = {
 					nim = {
 						nimsuggestPath = "/usr/bin/nimsuggest"
 					}
 				}
 			}
-            lspconfig.gleam.setup({})
+			lspconfig.gleam.setup({})
 
 			-- Autocompletion
 			local cmp = require('cmp')

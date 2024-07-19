@@ -6,8 +6,8 @@ return {
 		vim.o.timeoutlen = 800
 	end,
 	opts = {
-		triggers_blacklist = {
-			i = { 't', },
+		triggers = {
+         { "<auto>", mode = "nxsotc" },
 		}
 	},
 }

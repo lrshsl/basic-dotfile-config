@@ -1,5 +1,14 @@
 vim = vim
 
+
+-- TODO: 
+--> Undotree
+--> Harpoon
+--> Telescope themes?
+--> Oil?
+--> Vista?
+--> get good with vim-surround
+
 -- Required before plugins
 vim.g.mapleader = " "
 

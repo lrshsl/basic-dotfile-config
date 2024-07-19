@@ -14,6 +14,8 @@ set nrformats=alpha
 "set guifont=Source\ Code\ Pro\ Light:h7.5
 set guifont=JetBrains\ Mono\ Thin:h7.5
 
+set guicursor=n-v-c-sm-i-ci-ve:block,r-cr-o:hor20
+
 "set colorcolumn=80
 
 " Colors "
@@ -48,13 +50,11 @@ NumbersOn = false
 
 function ToggleNumbers()
 	if NumbersOn == true then
-		NumbersOn = not NumbersOn
-		vim.opt.number = NumbersOn
 		vim.cmd [[ set nu! rnu! ]]
 	else
-		NumbersOn = not NumbersOn
 		vim.cmd [[ set nu rnu ]]
 	end
+	NumbersOn = not NumbersOn
 end
 
 function SetFontSizeCurry(val)
@@ -89,67 +89,62 @@ function ToggleTransparentBg()
 	end
 end
 
-require 'which-key'.register { --- [which-key-bindings] Settings
-	['<space>,'] = {
-		name = 'Settings',
-		v = { ':Vista!!<CR>', 'Vista' },
-		l = { ':Limelight!!<CR>', 'Limelight' },
-		g = { ':Goyo 90%x50%<CR>', 'Goyo' },
-		G = { ':Goyo<CR>', 'Goyo (deactivate)' },
-		n = { ToggleNumbers, 'Toggle line numbers' },
-		b = {
-			name = 'Background',
-			b = { ToggleTransparentBg, 'Toggle transparency' },
-			t = {
-				name = 'Transparency',
-				['`'] = { BgSetTransparencyCurry(0.0), '0' },
-				['1'] = { BgSetTransparencyCurry(0.1), '1' },
-				['2'] = { BgSetTransparencyCurry(0.2), '2' },
-				['3'] = { BgSetTransparencyCurry(0.3), '3' },
-				['4'] = { BgSetTransparencyCurry(0.4), '4' },
-				['5'] = { BgSetTransparencyCurry(0.5), '5' },
-				['6'] = { BgSetTransparencyCurry(0.6), '6' },
-				['7'] = { BgSetTransparencyCurry(0.7), '7' },
-				['8'] = { BgSetTransparencyCurry(0.8), '8' },
-				['9'] = { BgSetTransparencyCurry(0.9), '9' },
-				['0'] = { BgSetTransparencyCurry(1.0), '10' },
-			}
+--> Settings bindings
+require 'which-key'.add {
+	group = 'Settings',
+	{ '<space>,v', ':Vista!!<CR>',      desc = 'Vista' },
+	{ '<space>,l', ':Limelight!!<CR>',  desc = 'Limelight' },
+	{ '<space>,g', ':Goyo 70%x90%<CR>', desc = 'Goyo' },
+	{ '<space>,G', ':Goyo<CR>',         desc = 'Goyo (deactivate)' },
+	{ '<space>,n', ToggleNumbers,       desc = 'Toggle line numbers' },
+	{
+		group = 'Transparency',
+		{ '<space>,bb',  ToggleTransparentBg,          desc = 'Toggle transparency' },
+		{ '<space>,bt`', BgSetTransparencyCurry(0),    desc = '0' },
+		{ '<space>,bt1', BgSetTransparencyCurry(0.03), desc = '1' },
+		{ '<space>,bt2', BgSetTransparencyCurry(0.05), desc = '2' },
+		{ '<space>,bt3', BgSetTransparencyCurry(0.08), desc = '3' },
+		{ '<space>,bt4', BgSetTransparencyCurry(0.15), desc = '4' },
+		{ '<space>,bt5', BgSetTransparencyCurry(0.2),  desc = '5' },
+		{ '<space>,bt6', BgSetTransparencyCurry(0.3),  desc = '6' },
+		{ '<space>,bt7', BgSetTransparencyCurry(0.5),  desc = '7' },
+		{ '<space>,bt8', BgSetTransparencyCurry(0.75), desc = '8' },
+		{ '<space>,bt9', BgSetTransparencyCurry(0.9),  desc = '9' },
+		{ '<space>,bt0', BgSetTransparencyCurry(1.0),  desc = '10' },
+	},
+	{
+		group = 'Font',
+		{ '<space>,f`', SetFontSizeCurry(6),  desc = '6' },
+		{ '<space>,f1', SetFontSizeCurry(7),  desc = '7' },
+		{ '<space>,f2', SetFontSizeCurry(8),  desc = '8' },
+		{ '<space>,f3', SetFontSizeCurry(9),  desc = '9' },
+		{ '<space>,f4', SetFontSizeCurry(10), desc = '10' },
+		{ '<space>,f5', SetFontSizeCurry(11), desc = '11' },
+		{ '<space>,f6', SetFontSizeCurry(12), desc = '12' },
+		{ '<space>,f7', SetFontSizeCurry(13), desc = '13' },
+		{ '<space>,f8', SetFontSizeCurry(16), desc = '16' },
+		{ '<space>,f9', SetFontSizeCurry(20), desc = '20' },
+		{ '<space>,f0', SetFontSizeCurry(30), desc = '30' },
+	},
+	{
+		group = 'Whitespace',
+		{
+			group = 'List',
+			{ 'l',           ':set list!<CR>',                                                      desc = 'Toggle' },
+			{ '<space>,wl2', [[ :set listchars=tab:-->,trail:~,leadmultispace:·\|,nbsp:¤ <CR> ]],   desc = '2' },
+			{ '<space>,wl3', [[ :set listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤ <CR> ]],  desc = '3' },
+			{ '<space>,wl4', [[ :set listchars=tab:-->,trail:~,leadmultispace:···\|,nbsp:¤ <CR> ]], desc = '4' },
 		},
-		f = {
-			name = 'Font',
-			['`'] = { SetFontSizeCurry(6), '6' },
-			['1'] = { SetFontSizeCurry(7), '7' },
-			['2'] = { SetFontSizeCurry(8), '8' },
-			['3'] = { SetFontSizeCurry(9), '9' },
-			['4'] = { SetFontSizeCurry(10), '10' },
-			['5'] = { SetFontSizeCurry(11), '11' },
-			['6'] = { SetFontSizeCurry(12), '12' },
-			['7'] = { SetFontSizeCurry(13), '13' },
-			['8'] = { SetFontSizeCurry(16), '16' },
-			['9'] = { SetFontSizeCurry(20), '20' },
-			['0'] = { SetFontSizeCurry(30), '30' },
+		{ '<space>wls', ':set et <CR>',   desc = 'Use spaces' },
+		{ '<space>wlt', ':set noet <CR>', desc = 'Use tabs' },
+		{
+			group = 'Width of indentation',
+			{ '<space>wwd',  ':set ts=3 sts=3 sw=3  <CR>', desc = 'Default' },
+			{ '<space>,ww1', ':set ts=1 sts=1 sw=1 <CR>',  desc = '1' },
+			{ '<space>,ww2', ':set ts=2 sts=2 sw=2 <CR>',  desc = '2' },
+			{ '<space>,ww3', ':set ts=3 sts=3 sw=3 <CR>',  desc = '3' },
+			{ '<space>,ww4', ':set ts=4 sts=4 sw=4 <CR>',  desc = '4' },
+			{ '<space>,ww8', ':set ts=8 sts=8 sw=8 <CR>',  desc = '8' },
 		},
-		w = {
-			name = 'Whitespace',
-			l = {
-				name = 'List',
-				l = { ':set list!<CR>', 'Toggle' },
-				['2'] = { [[ :set listchars=tab:-->,trail:~,leadmultispace:·\|,nbsp:¤ <CR> ]], '2' },
-				['3'] = { [[ :set listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤ <CR> ]], '3' },
-				['4'] = { [[ :set listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤ <CR> ]], '4' },
-			},
-			s = { ':set et <CR>', 'Use spaces' },
-			t = { ':set noet <CR>', 'Use tabs' },
-			w = {
-				name = 'Width of indentation',
-				d = { ':set ts=3 sts=3 sw=3  <CR>', 'Default' },
-				['1'] = { ':set ts=1 sts=1 sw=1 <CR>', '1' },
-				['2'] = { ':set ts=2 sts=2 sw=2 <CR>', '2' },
-				['3'] = { ':set ts=3 sts=3 sw=3 <CR>', '3' },
-				['4'] = { ':set ts=4 sts=4 sw=4 <CR>', '4' },
-				['8'] = { ':set ts=8 sts=8 sw=8 <CR>', '8' },
-				n = { ToggleNumbers, 'Toggle line numbers' },
-			}
-		}
 	}
 }
