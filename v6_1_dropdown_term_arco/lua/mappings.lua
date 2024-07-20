@@ -1,12 +1,19 @@
 local wk = require 'which-key'
 local telescope = require 'telescope.builtin'
 local session_man = require 'session_manager'
+-- local harpoon = require 'harpoon'
 
 wk.add {
 	--> Leader mappings
 	{
 		--> File / Buffer navigation
 		{ '<space>o',  '<cmd>Neotree toggle<cr>',               desc = 'File Tree' },
+		-- { '<leader>gh', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end },
+		-- { '<leader>ga', function() harpoon:list():append() end },
+		-- { '<leader>gj', function() harpoon:list():select(1) end },
+		-- { '<leader>gk', function() harpoon:list():select(2) end },
+		-- { '<leader>gl', function() harpoon:list():select(3) end },
+		-- { '<leader>g;', function() harpoon:list():select(4) end },
 
 		--> Find
 		{ '<space>f',  group = 'find' },
@@ -34,20 +41,23 @@ wk.add {
 		--> Lsp
 		{ '<space>c',  group = 'code' },
 		{ '<space>ca', vim.lsp.buf.code_action,                 desc = 'Code Action' },
-		{ '<space>cr', vim.lsp.buf.rename,                      desc = 'Rename' },
 		{ '<space>ch', vim.lsp.buf.hover,                       desc = 'Hover' },
 		{ '<space>cf', vim.lsp.buf.format,                      desc = 'Format' },
+		{ '<space>cd', vim.diagnostic.open_float,               desc = 'Diagnostics' },
+		{ '<space>cr', function()
+			return ":IncRename " .. vim.fn.expand("<cword>")
+		end, desc = 'Rename', expr = true },
 
 		--> Text editing
-		{ '<space>u',  'viw~',                                  desc = 'lower <-> UPPER' },
-		{ '<space>U',  'viw~',                                  desc = 'lower-word <-> UPPER-WORD' },
-		{ '<space>y',  '~h',                                    desc = '~' },
+		{ '<space>u',  'viw~',    desc = 'lower <-> UPPER' },
+		{ '<space>U',  'viw~',    desc = 'lower-word <-> UPPER-WORD' },
+		{ '<space>y',  '~h',      desc = '~' },
 
 		--> Buffer
-		{ '<space>w',  ':w<CR>',                                desc = 'write buffer' },
-		{ '<space>q',  ':q<CR>',                                desc = 'quit buffer' },
-		{ '<space>;w', ':wa<CR>',                               desc = 'write all' },
-		{ '<space>;q', ':xa<CR>',                               desc = 'quit all' },
+		{ '<space>w',  ':w<CR>',  desc = 'write buffer' },
+		{ '<space>q',  ':q<CR>',  desc = 'quit buffer' },
+		{ '<space>;w', ':wa<CR>', desc = 'write all' },
+		{ '<space>;q', ':xa<CR>', desc = 'quit all' },
 
 		--> Search and replace
 		{
@@ -137,6 +147,8 @@ vim.cmd [[
  set mouse=a
  noremap <ScrollWheelUp> <C-Y>
  noremap <ScrollWheelDown> <C-E>
+ noremap <C-ScrollWheelUp> <C-+>
+ noremap <C-ScrollWheelDown> <C-->
 
 " Paste in all modes and editors (neovide) "
 
@@ -254,6 +266,7 @@ noremap L I
 
 " Needed for some reason
 nnoremap cl cl
+nnoremap ci ci
 
 " Alias beginning and end of line "
 noremap <silent> H ^

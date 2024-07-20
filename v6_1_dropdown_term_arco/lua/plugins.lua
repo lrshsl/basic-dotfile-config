@@ -16,31 +16,26 @@ vim.opt.rtp:prepend(lazypath)
 -- Actual plugins
 local plugins = {
 	--> Base dependencies
-	'nvim-lua/plenary.nvim',
-	'echasnovski/mini.icons',
-	'nvim-tree/nvim-web-devicons',
+	{ 'nvim-lua/plenary.nvim',       lazy = true },
+	{ 'echasnovski/mini.icons',      lazy = true },
+	{ 'nvim-tree/nvim-web-devicons', lazy = true },
 
 	--> Platformio
-	'normen/vim-pio',
+	{ 'normen/vim-pio',              lazy = true },
 
 	--> Colorscheme
-	{
-		'sainnhe/sonokai',
-		lazy = true
-	},
+	{ 'sainnhe/sonokai',             lazy = true },
 
 	--> Essentials for editing
-	'nvim-treesitter/nvim-treesitter',
+	require 'treesitter_conf',
 	'tpope/vim-surround',
 	'tpope/vim-repeat',
 	'tpope/vim-commentary',
-	{
-		'm4xshen/autoclose.nvim',
-		config = function() require('autoclose').setup() end
-	},
+
+	require 'autopairs_conf',
 
 	--> Undotree
-	'mbbill/undotree',
+	{ 'mbbill/undotree',        lazy = true },
 
 	--> Sneak around in a file with s/S
 	'justinmk/vim-sneak',
@@ -62,18 +57,20 @@ local plugins = {
 
 	--> Files
 	require 'neotree',
-	require 'harpoon',
+	-- require 'harpoon',
 
 	--> Fuzzy finders
 	require 'telescope_conf',
+
+	--> Noice
+	require 'noice_conf',
 
 	--> Integrate wezterm
 	require 'navigator',
 
 	--> Zen mode
-	'junegunn/goyo.vim',
-	'junegunn/limelight.vim',
+	{ 'junegunn/goyo.vim',      lazy = true },
+	{ 'junegunn/limelight.vim', lazy = true },
 }
-local opts = {}
 
-require'lazy'.setup(plugins, opts)
+require 'lazy'.setup(plugins, {})

@@ -2,6 +2,7 @@ vim = vim
 
 
 -- TODO: 
+--> Store settings! (local? Session?)
 --> Undotree
 --> Harpoon
 --> Telescope themes?
@@ -12,9 +13,9 @@ vim = vim
 -- Required before plugins
 vim.g.mapleader = " "
 
-Nmap = function(key, command) vim.keymap.set('n', key, command) end
-Vmap = function(key, command) vim.keymap.set('v', key, command) end
-Imap = function(key, command) vim.keymap.set('i', key, command) end
+Nmap = function(key, command) vim.keymap.set('n', key, command, { noremap = true, silent = true }) end
+Vmap = function(key, command) vim.keymap.set('v', key, command, { noremap = true, silent = true }) end
+Imap = function(key, command) vim.keymap.set('i', key, command, { noremap = true, silent = true }) end
 
 require 'plugins'
 require 'mappings'

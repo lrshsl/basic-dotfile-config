@@ -7,7 +7,9 @@ return {
 		"MunifTanjim/nui.nvim",
 		-- "3rd/image.nvim",
 	},
-	config = {
+	lazy = true,
+	cmd = "Neotree",
+	opts = {
 		window = {
 			mappings = {
 				["<tab>"] = "toggle_node",
