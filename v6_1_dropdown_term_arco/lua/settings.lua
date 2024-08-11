@@ -92,7 +92,6 @@ end
 --> Settings bindings
 require 'which-key'.add {
 	group = 'Settings',
-	{ '<space>,v', ':Vista!!<CR>',      desc = 'Vista', silent = true, },
 	{ '<space>,l', ':Limelight!!<CR>',  desc = 'Limelight', silent = true, },
 	{ '<space>,g', ':Goyo 90%x90%<CR>', desc = 'Goyo', silent = true, },
 	{ '<space>,G', ':Goyo<CR>',         desc = 'Goyo (deactivate)', silent = true, },

@@ -2,7 +2,8 @@ return {
 	'nvim-treesitter/nvim-treesitter',
 	opts = {
 		ensure_installed = {
-			'vim', 'vimdoc', 'lua', 'regex',
+			'vim', 'regex', 'lua', 'bash', 'markdown', 'markdown_inline', --> Noice recommendations
+			'vimdoc', 'regex',
 			'c', 'cpp', 'rust', 'python', 'java',
 			'wgsl',
 		},

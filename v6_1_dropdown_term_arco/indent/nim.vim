@@ -4,6 +4,10 @@
 " Based On:	        python.vim by David Bustos <bustos@caltech.edu>
 " Last Change:		2024 April 11
 
+" :help ft-vim-indent
+" :help ft-vim-syntax
+" :help ft-man-plugin
+
 " Only load this indent file when no other was loaded.
 if exists("b:did_indent")
   finish

@@ -1,14 +1,16 @@
 vim = vim
 
 
--- TODO: 
+-- TODO:
 --> Store settings! (local? Session?)
+--> fix noice
 --> Undotree
 --> Harpoon
 --> Telescope themes?
---> Oil?
 --> Vista?
 --> get good with vim-surround
+--
+--> ditch nvim-cmp for <C-x><C-o> omnifunc?
 
 -- Required before plugins
 vim.g.mapleader = " "
@@ -22,9 +24,10 @@ require 'mappings'
 
 require 'settings'
 
-vim.cmd[[
+vim.cmd [[
 if exists('g:neovide')
 	lua require 'neovide'
 endif
-]]
 
+iunmap <tab>
+]]

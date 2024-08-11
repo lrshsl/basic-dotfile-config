@@ -20,22 +20,41 @@ local plugins = {
 	{ 'echasnovski/mini.icons',      lazy = true },
 	{ 'nvim-tree/nvim-web-devicons', lazy = true },
 
+	{ 'ollykel/v-vim',               ft = 'v' },
+
 	--> Platformio
-	{ 'normen/vim-pio',              lazy = true },
+	{ 'normen/vim-pio',              cmd = "PIO" },
 
 	--> Colorscheme
 	{ 'sainnhe/sonokai',             lazy = true },
 
-	--> Essentials for editing
+	--> Text editing
 	require 'treesitter_conf',
 	'tpope/vim-surround',
 	'tpope/vim-repeat',
 	'tpope/vim-commentary',
+	{ "smjonas/inc-rename.nvim", opts = { show_message = false, } },
 
 	require 'autopairs_conf',
 
+	{
+		'nvim-orgmode/orgmode',
+		event = 'VeryLazy',
+		ft = { 'org' },
+		config = function()
+			-- Setup orgmode
+			require('orgmode').setup({
+				org_agenda_files = '~/orgfiles/**/*',
+				org_default_notes_file = '~/orgfiles/refile.org',
+			})
+
+			-- NOTE: If you are using nvim-treesitter with ~ensure_installed = "all"~ option
+			-- add ~org~ to ignore_install
+		end,
+	},
+
 	--> Undotree
-	{ 'mbbill/undotree',        lazy = true },
+	{ 'mbbill/undotree',         lazy = false },
 
 	--> Sneak around in a file with s/S
 	'justinmk/vim-sneak',
@@ -47,7 +66,7 @@ local plugins = {
 	require 'latex',
 
 	--> AI helper
-	'exafunction/codeium.vim',
+	{ 'exafunction/codeium.nvim', opts = {} },
 
 	--> Space(macs|vim)-like keybinding preview
 	require 'which_key',
@@ -57,20 +76,18 @@ local plugins = {
 
 	--> Files
 	require 'neotree',
-	-- require 'harpoon',
+	require 'harpoon',
+	{ 'stevearc/oil.nvim',        opts = {}, cmd = 'Oil' },
 
 	--> Fuzzy finders
 	require 'telescope_conf',
-
-	--> Noice
-	require 'noice_conf',
 
 	--> Integrate wezterm
 	require 'navigator',
 
 	--> Zen mode
-	{ 'junegunn/goyo.vim',      lazy = true },
-	{ 'junegunn/limelight.vim', lazy = true },
+	{ 'junegunn/goyo.vim',      cmd = 'Goyo' },
+	{ 'junegunn/limelight.vim', cmd = 'Limelight' },
 }
 
 require 'lazy'.setup(plugins, {})

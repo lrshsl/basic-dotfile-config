@@ -1,6 +1,7 @@
 
 return {
 	"lervag/vimtex",
+	ft = "tex", -- Lazy load on tex files
 	config = function()
 		vim.cmd[[
 		filetype plugin indent on

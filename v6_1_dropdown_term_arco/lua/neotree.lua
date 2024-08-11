@@ -12,13 +12,13 @@ return {
 	opts = {
 		window = {
 			mappings = {
-				["<tab>"] = "toggle_node",
+				["<space>"] = "toggle_node",
 				["<esc>"] = "cancel",
 				["s"] = "open_vsplit",
 				["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = false } },
 
 				["a"] = {
-					"add",   -- supports brace expansion ("x{a,b,c}" -> xa,xb,xc)
+					"add",        -- supports brace expansion ("x{a,b,c}" -> xa,xb,xc)
 					config = {
 						show_path = "absolute" -- "none", "relative", "absolute"
 					}
