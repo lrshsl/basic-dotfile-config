@@ -70,23 +70,17 @@ return {
 					['pyright'] = { 'python' },
 					['nimls'] = { 'nim' },
 					['zls'] = { 'zig' },
+					['vls'] = { 'vlang', 'v' },
 				}
 			}
 
 			-- Mason
 			require 'mason'.setup {}
 			require 'mason-lspconfig'.setup {
-				ensure_installed = { 'lua_ls', 'vimls', 'rust_analyzer', 'clangd', 'pyright', 'nimls', 'zls' },
+				ensure_installed = { 'lua_ls', 'vimls', 'rust_analyzer', 'clangd', 'pyright', 'nimls', 'zls', 'vls' },
 				handlers = {
 					function(server_name)
-						if server_name == "clangd" then
-							require 'lspconfig'[server_name].setup {
-								settings = {
-								}
-							}
-						else
-							require 'lspconfig'[server_name].setup {}
-						end
+						require 'lspconfig'[server_name].setup {}
 					end,
 				}
 			}
@@ -109,13 +103,10 @@ return {
 					['<C-Space>'] = cmp.mapping.complete(),
 					['<C-y>'] = cmp.mapping.confirm { select = true },
 					['<C-c>'] = cmp.mapping.abort(),
-					['<C-e>'] = cmp.mapping(function()
-						if cmp.visible() then
+					['<C-e>'] = cmp.mapping(
+						function()
 							cmp.select_prev_item { behavior = 'insert' }
-						else
-							cmp.complete()
-						end
-					end),
+						end),
 					['<C-n>'] = cmp.mapping(function()
 						if cmp.visible() then
 							cmp.select_next_item { behavior = 'insert' }

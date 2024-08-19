@@ -2,22 +2,84 @@ TermBuf = vim.api.nvim_create_buf(true, false)
 TermWin = nil
 local is_initialized = false
 
-MinTermWidth = 50
-TermWidth = function()
-	local w = math.floor(vim.o.columns * 0.8)
-	if w < MinTermWidth then
-		return MinTermWidth
+local int = math.floor
+
+MIN_TERM_WIDTH = 50
+MIN_TERM_HEIGHT = 12
+
+local term_width = int(vim.o.columns * 0.8)
+local term_height = 20
+local term_pos_x = (vim.o.columns - term_width) / 2
+local term_pos_y = 1
+
+SetTermWidth = function(w, relative)
+	if relative then
+		w = int(vim.o.columns * w)
 	end
-	return w
+	if w < MIN_TERM_WIDTH then
+		term_width = MIN_TERM_WIDTH
+	else
+		term_width = w
+	end
 end
 
-MinTermHeight = 16
-TermHeight = function()
-	local h = math.floor(vim.o.lines * 0.2)
-	if h < MinTermHeight then
-		return MinTermHeight
+SetTermHeight = function(h, relative)
+	if relative then
+		h = int(vim.o.lines * h)
 	end
-	return h
+	if h < MIN_TERM_HEIGHT then
+		term_height = MIN_TERM_HEIGHT
+	else
+		term_height = h
+	end
+end
+
+GetTermWidth = function()
+	return term_width
+end
+
+GetTermHeight = function()
+	return term_height
+end
+
+local reload = function()
+	local config = vim.api.nvim_win_get_config(TermWin)
+	config.col = term_pos_x
+	config.row = term_pos_y
+	vim.api.nvim_win_set_config(TermWin, config)
+end
+
+SetTermPos = function(x, y)
+	term_pos_x = x
+	term_pos_y = y
+end
+
+MoveTermUp = function()
+	if term_pos_y >= 1 then
+		term_pos_y = term_pos_y - 1
+	end
+	reload()
+end
+
+MoveTermDown = function()
+	if term_pos_y <= vim.o.lines then
+		term_pos_y = term_pos_y + 1
+	end
+	reload()
+end
+
+MoveTermLeft = function()
+	if term_pos_x >= 1 then
+		term_pos_x = term_pos_x - 1
+	end
+	reload()
+end
+
+MoveTermRight = function()
+	if term_pos_x <= vim.o.columns then
+		term_pos_x = term_pos_x + 1
+	end
+	reload()
 end
 
 function ToggleTerminal()
@@ -32,10 +94,10 @@ function ToggleTerminal()
 		-- Create a new terminal window
 		TermWin = vim.api.nvim_open_win(TermBuf, true, {
 			relative = "editor",
-			width = TermWidth(),
-			height = TermHeight(),
-			col = (vim.o.columns - TermWidth()) / 2,
-			row = 1,
+			width = GetTermWidth(),
+			height = GetTermHeight(),
+			col = term_pos_x,
+			row = term_pos_y,
 			style = "minimal",
 			border = "rounded",
 		})
@@ -46,16 +108,17 @@ function ToggleTerminal()
 			is_initialized = true
 
 			-- Open the terminal buffer in the new window
-			vim.api.nvim_buf_set_option(TermBuf, 'modified', false)    -- idk why
-			local term_channel = vim.fn.termopen 'fish'
+			vim.api.nvim_buf_set_option(TermBuf, 'modified', false) -- idk why
+			local term_channel = vim.fn.termopen("fish --init-command=\"builtin cd " .. vim.fn.getcwd() .. "\"")
 
-			vim.api.nvim_command 'startinsert'
-			vim.api.nvim_chan_send(term_channel, 'cd ' .. vim.fn.getcwd() .. ' && clear_screen\n')
-		else
-			vim.api.nvim_command 'startinsert'
+			-- vim.api.nvim_chan_send(term_channel, 'cd ' .. vim.fn.getcwd() .. ' && clear_screen\n')
 		end
+
+		vim.api.nvim_command 'startinsert'
 	else
 		-- Close the terminal window if already open
+		SetTermWidth(vim.api.nvim_win_get_width(TermWin), false)
+		SetTermHeight(vim.api.nvim_win_get_height(TermWin), false)
 		vim.api.nvim_win_close(TermWin, true)
 		TermWin = nil
 	end

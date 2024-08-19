@@ -5,17 +5,17 @@ return {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
-		-- "3rd/image.nvim",
+		"3rd/image.nvim",
 	},
 	lazy = true,
 	cmd = "Neotree",
 	opts = {
 		window = {
 			mappings = {
-				["<space>"] = "toggle_node",
+				["<space>oo"] = "",
 				["<esc>"] = "cancel",
 				["s"] = "open_vsplit",
-				["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = false } },
+				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = false } },
 
 				["a"] = {
 					"add",        -- supports brace expansion ("x{a,b,c}" -> xa,xb,xc)

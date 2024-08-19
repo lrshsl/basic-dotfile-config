@@ -1,4 +1,4 @@
-vim.g.neovide_transparency = 0.9
+--vim.g.neovide_transparency = 0.9 -- set in settings
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_fullscreen = false
 

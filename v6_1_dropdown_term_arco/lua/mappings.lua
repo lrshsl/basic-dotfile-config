@@ -15,7 +15,6 @@ wk.add {
 
 		--> File navigation
 		{ '<space>o',  group = 'open' },
-		{ '<space>of', '<cmd>Oil<cr>',               desc = 'Oil' },
 		{ '<space>oo', '<cmd>Neotree toggle<cr>',    desc = 'File Tree' },
 		{ '<space>od',
 			'<cmd>Trouble lsp_errors toggle focus=true win.position=right<CR>',
@@ -41,10 +40,12 @@ wk.add {
 
 		{ '<space>fg', telescope.live_grep,                                        desc = 'Live grep' },
 
-		{ '<space>ff', telescope.find_files,                                       desc = 'Find Files' },
+		{ '<space>ft', telescope.find_files,                                       desc = 'Telescope find_files' },
+		{ '<space>ff', '<cmd>BrootWorkingDir<CR>',                                 desc = 'Find Files' },
+		{ '<space>fl', '<cmd>BrootCurrentDir<CR>',                                 desc = 'Find local Files' },
 		{ '<space>fa', '<cmd>Telescope find_files hidden=true<cr>',                desc = 'Find All Files (also hidden)' },
 		{ '<space>fA', '<cmd>Telescope find_files hidden=true no_ignore=true<cr>', desc = 'Find All Files (hidden & ignored)' },
-		{ '<space>ft', telescope.buffers,                                          desc = 'Find Buffers' },
+		{ '<space>fb', telescope.buffers,                                          desc = 'Find Buffers' },
 		{ '<space>fo', telescope.oldfiles,                                         desc = 'Open Recent File' },
 
 		{ '<space>fs', telescope.lsp_document_symbols,                             desc = 'Find Document Symbols' },
@@ -114,6 +115,8 @@ wk.add {
 		{ '0', desc = 'Start of line' },
 	},
 
+	{ '-',  '<cmd>Oil<cr>',   desc = 'Oil' },
+
 	{
 		mode = { 'n' },
 		{ '<A-o>', '<cmd>ClangdSwitchSourceHeader<CR>', desc = 'Switch source/header' },
@@ -158,10 +161,26 @@ Nmap('<C-right>', ':vertical resize+5<CR>')
 --> Terminal
 require 'dropdown_terminal'
 
--- Map a key to toggle the terminal
-vim.keymap.set('n', '<leader>t', ToggleTerminal, { noremap = true, silent = true })
-vim.keymap.set('t', 'tn', ToggleTerminal, { noremap = true, silent = true })
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+Tmap('<C-up>', '<cmd>res +5<CR>')
+Tmap('<C-down>', '<cmd>res -5<CR>')
+Tmap('<C-left>', '<cmd>vertical resize-5<CR>')
+Tmap('<C-right>', '<cmd>vertical resize+5<CR>')
+
+Nmap('<S-up>', MoveTermUp)
+Nmap('<S-down>', MoveTermDown)
+Nmap('<S-left>', MoveTermLeft)
+Nmap('<S-right>', MoveTermRight)
+
+--> Toggle terminal
+Nmap('<leader>t', ToggleTerminal)
+Tmap('tn', ToggleTerminal)
+Tmap('<Esc><Esc>', '<C-\\><C-n>')
+
+require 'settings'
+
+--> Increase font size
+Nmap('+', ChangeFontSize(0.5))
+Nmap('_', ChangeFontSize(-0.5))
 
 --> Code/text actions
 Nmap('<space>;r', ':!')
@@ -188,8 +207,8 @@ vnoremap Y "+y
 vnoremap <C-c> "+y
 
 " Scroll using Ctrl "
-noremap <C-e> 10<C-e>
-noremap <C-n> 10<C-y>
+nnoremap <C-e> 10<C-e>
+nnoremap <C-n> 10<C-y>
 
 " <C-u> is already mapped
 noremap <C-y> <C-d>
@@ -248,6 +267,10 @@ augroup CMD_RUN
 	" Lua | Vim "
 	autocmd BufNewFile,BufRead *.lua              nnoremap <space>ra   :!lua<space>
 	autocmd BufNewFile,BufRead *.lua,*.vim        nnoremap <space>rf   :so %
+
+	" V "
+	autocmd BufNewFile,BufRead *.v                nnoremap <space>ra   :!v crun .<space>
+	autocmd BufNewFile,BufRead *.v                nnoremap <space>rf   :!v crun %
 
 	" Nim "
 	autocmd BufNewFile,BufRead *.nim              nnoremap <space>ra   :!nimble run --<space>

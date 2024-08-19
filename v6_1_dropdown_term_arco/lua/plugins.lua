@@ -20,13 +20,16 @@ local plugins = {
 	{ 'echasnovski/mini.icons',      lazy = true },
 	{ 'nvim-tree/nvim-web-devicons', lazy = true },
 
-	{ 'ollykel/v-vim',               ft = 'v' },
-
+	{
+		'thecodinglab/nvim-vlang',
+		ft = 'vlang'
+	},
 	--> Platformio
-	{ 'normen/vim-pio',              cmd = "PIO" },
+	{ 'normen/vim-pio',               cmd = "PIO" },
 
 	--> Colorscheme
-	{ 'sainnhe/sonokai',             lazy = true },
+	{ 'sainnhe/sonokai',              lazy = true },
+	{ 'lifepillar/vim-colortemplate', cmd = 'Colortemplate' },
 
 	--> Text editing
 	require 'treesitter_conf',
@@ -76,7 +79,8 @@ local plugins = {
 
 	--> Files
 	require 'neotree',
-	require 'harpoon',
+	require 'harpoon1',
+	{ "aohoyd/broot.nvim",        opts = {} },
 	{ 'stevearc/oil.nvim',        opts = {}, cmd = 'Oil' },
 
 	--> Fuzzy finders
