@@ -30,5 +30,4 @@ if exists('g:neovide')
 	lua require 'neovide'
 endif
 
-iunmap <tab>
 ]]

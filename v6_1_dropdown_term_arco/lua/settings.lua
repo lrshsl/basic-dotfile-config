@@ -3,6 +3,9 @@ NumbersOn = false
 vim.g.neovide_transparency = 0.9
 FontSize = 7.5
 
+require 'dropdown_terminal'
+TermLoadPreset(1)
+
 vim.cmd('set guifont=JetBrains\\ Mono\\ Thin:h' .. FontSize)
 --set guifont=Source\ Code\ Pro\ Light:h7.5
 
@@ -22,6 +25,7 @@ set nrformats=alpha
 set guicursor=n-v-c-sm-i-ci-ve:block,r-cr-o:hor20
 
 "set colorcolumn=80
+set nu rnu
 
 " Colors "
 set termguicolors
@@ -46,8 +50,11 @@ augroup TAB_VS_SPACES_AUGROUP
 	autocmd BufNewFile,BufRead Makefile          :setlocal list et! list listchars=tab:-->,trail:~,leadmultispace:··\|,nbsp:¤
 	autocmd BufNewFile,BufRead Makefile          :echom "Makefile recognised. Now using tabs for indent"
 
-	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :setlocal et ts=2 sts=2 sw=2
-	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :setlocal list listchars=tab:->,trail:~,leadmultispace:·\|,nbsp:¤
+	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :setlocal et! ts=4 sts=4 sw=4
+	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :setlocal list listchars=tab:->,trail:~,leadmultispace:·,nbsp:¤
+	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :inoremap ;err ERROR(F(""));<C-o>3h
+	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :inoremap ;info INFO(F(""));<C-o>3h
+	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :inoremap ;f F("")<left><left>
 
 	autocmd BufNewFile,BufRead *.nim                      :setlocal et ts=2 sts=2 sw=2
 	autocmd BufNewFile,BufRead *.nim                      :setlocal list listchars=tab:->,trail:~,leadmultispace:·\|,nbsp:¤
@@ -60,8 +67,8 @@ augroup FILE_TEMPLATES_AUGROUP
 	au BufNewFile Doxyfile                   0r ~/.config/nvim/templates/general/Doxyfile.template | lua InsertSubstitution('Project Name')
 	au BufNewFile .clang-format              0r ~/.config/nvim/templates/c/clang-format.template
 
-	au BufNewFile *.h                        0r ~/.config/nvim/templates/c/h.template | lua InsertSubstitution('filename')
-	au BufNewFile *.c                        0r ~/.config/nvim/templates/c/c.template | lua InsertSubstitution('filename')
+	"au BufNewFile *.h                        0r ~/.config/nvim/templates/c/h.template | lua InsertSubstitution('filename')
+	"au BufNewFile *.c                        0r ~/.config/nvim/templates/c/c.template | lua InsertSubstitution('filename')
 	au BufNewFile header.h                   0r ~/.config/nvim/templates/c/header.h.template
 
 	au BufNewFile .gitignore                 :lua LoadTemplate("general/gitignore.template")

@@ -70,15 +70,18 @@ wk.add {
 		end, desc = 'Rename', expr = true },
 
 		--> Text editing
-		{ '<space>u',  'viw~',    desc = 'lower <-> UPPER' },
-		{ '<space>U',  'viw~',    desc = 'lower-word <-> UPPER-WORD' },
-		{ '<space>y',  '~h',      desc = '~' },
+		{ '<space>u',  'viw~',               desc = 'lower <-> UPPER' },
+		{ '<space>U',  'viW~',               desc = 'lower-word <-> UPPER-WORD' },
+		{ '<space>y',  '~<Left>',                 desc = '~' },
+
+		{ '<space>;c', group = "Change case" },
+		{ '<space>;cc', [[viw:s/\%V_\(\w\)/\u\1/g<CR>]], desc = "snake_case -> camelCase" }, -- \%V represents the visual selection boundary. If not specified, s operates linewise
+		{ '<space>;cs', [[viw:s/\%V\(\u\)/_\l\1/g<CR>]], desc = "camelCase -> snake_case" },
 
 		--> Buffer
-		{ '<space>w',  ':wa<CR>', desc = 'write buffers' },
-		{ '<space>q',  ':q<CR>',  desc = 'quit buffer' },
-		{ '<space>;w', ':wa<CR>', desc = 'write all' },
-		{ '<space>;q', ':xa<CR>', desc = 'quit all' },
+		{ '<space>w',   ':wa<CR>',                   desc = 'write buffers' },
+		{ '<space>q',   ':q<CR>',                    desc = 'quit buffer' },
+		{ '<space>;q',  ':qa<CR>',                   desc = 'quit all' },
 
 		--> Search and replace
 		{
@@ -86,13 +89,13 @@ wk.add {
 			{ '<space>*', ':%s/<C-r><C-w>/<C-r><C-w>/gc<Left><Left><Left>',
 				desc = 'Search and replace (cursor)' },
 			{ '<space>;s', ':%s//gc<Left><Left><Left>',           desc = 'Search and replace' },
-			{ '<space>f*', '*<cmd>Telescope live_grep<cr><C-r>/', desc = 'Live grep' },
+			{ '<space>f*', '*<cmd>Telescope live_grep<CR><C-r>/', desc = 'Live grep' },
 
 		},
 		{
 			mode = { 'v' },
 			{ '<space>*',  ':s/<C-r><C-w>/<C-r><C-w>/g<Left><Left>', desc = 'Search and replace (cursor)' },
-			{ '<space>;s', ':s//g<Left><Left>',                      desc = 'Search and replace' },
+			{ '<space>;s', [[:s/\%V/g<Left><Left>]],                      desc = 'Search and replace' },
 		},
 	},
 
@@ -155,16 +158,16 @@ wk.add {
 --> Resize splits with arrow keys
 Nmap('<C-up>', ':res +5<CR>')
 Nmap('<C-down>', ':res -5<CR>')
-Nmap('<C-left>', ':vertical resize-5<CR>')
-Nmap('<C-right>', ':vertical resize+5<CR>')
+Nmap('<C-left>', ':vertical resize-2<CR>')
+Nmap('<C-right>', ':vertical resize+2<CR>')
 
 --> Terminal
 require 'dropdown_terminal'
 
 Tmap('<C-up>', '<cmd>res +5<CR>')
 Tmap('<C-down>', '<cmd>res -5<CR>')
-Tmap('<C-left>', '<cmd>vertical resize-5<CR>')
-Tmap('<C-right>', '<cmd>vertical resize+5<CR>')
+Tmap('<C-left>', '<cmd>vertical resize-2<CR>')
+Tmap('<C-right>', '<cmd>vertical resize+2<CR>')
 
 Nmap('<S-up>', MoveTermUp)
 Nmap('<S-down>', MoveTermDown)
@@ -198,13 +201,23 @@ noremap <C-ScrollWheelDown> <C-->
 
 " Paste in all modes and editors (neovide) "
 
+inoremap <C-S-v> <MiddleMouse>
 nnoremap <C-S-v> i<MiddleMouse>
 nnoremap <C-v> "+p
 nnoremap <space>v <C-v>
 
-" Paste: Yank to clipboard in visual with Y "
+" Paste: Yank to clipboard in visual with Y / ctrl-c ctrl-v "
 vnoremap Y "+y
 vnoremap <C-c> "+y
+vnoremap <C-v> "+p
+
+" Put yanked content in reg 8 "
+noremap <space>P <cmd>let @8=@"<CR>
+noremap <space>p "8p
+
+" Paste on new line "
+nnoremap <space>;p <cmd>pu<CR>==$
+nnoremap <space>;P <cmd>pu!<CR>==$
 
 " Scroll using Ctrl "
 nnoremap <C-e> 10<C-e>
@@ -223,6 +236,14 @@ tmap <C-S-i> <cmd>wincmd l<CR>
 tmap <C-S-h> <cmd>wincmd h<CR>
 tmap <C-S-n> <cmd>wincmd j<CR>
 tmap <C-S-e> <cmd>wincmd k<CR>
+
+nmap <space>i <cmd>wincmd l<CR>
+nmap <space>h <cmd>wincmd h<CR>
+nmap <space>n <cmd>wincmd j<CR>
+nmap <space>e <cmd>wincmd k<CR>
+
+" Stop highlight "
+noremap <C-;> <cmd>noh<CR>
 ]]
 
 --vim.cmd " map [[ [{ "
@@ -239,7 +260,7 @@ vim.cmd [[
 
 " Run commands "
 nnoremap <space>rr :!
-nnoremap <space>rs :so ~/.config/nvim/init.lua
+nnoremap <space>rs :so ~/.config/nvim/init.lua<CR>
 nnoremap <space>rm :make<space>
 
 nnoremap <space>ra :lua ToggleTerminal()<CR>

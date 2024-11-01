@@ -12,6 +12,20 @@ local term_height = 20
 local term_pos_x = (vim.o.columns - term_width) / 2
 local term_pos_y = 1
 
+TermLoadPreset = function(n)
+	if n == 0 then
+		SetTermWidth(0.8, true)
+		SetTermHeight(20, false)
+		SetTermPos(int(vim.o.columns * 0.1) - 2, 1, false)
+	elseif n == 1 then
+		SetTermWidth(0.5, true)
+		SetTermHeight(vim.o.lines - 6, false)
+		SetTermPos(int(vim.o.columns * 0.5) - 2, 1, false)
+	else
+		print("Unknown preset")
+	end
+end
+
 SetTermWidth = function(w, relative)
 	if relative then
 		w = int(vim.o.columns * w)
@@ -49,9 +63,14 @@ local reload = function()
 	vim.api.nvim_win_set_config(TermWin, config)
 end
 
-SetTermPos = function(x, y)
-	term_pos_x = x
-	term_pos_y = y
+SetTermPos = function(x, y, relative)
+	if relative then
+		term_pos_x = int(x * vim.o.colums)
+		term_pos_y = int(y * vim.o.lines)
+	else
+		term_pos_x = x
+		term_pos_y = y
+	end
 end
 
 MoveTermUp = function()

@@ -71,6 +71,7 @@ return {
 					['nimls'] = { 'nim' },
 					['zls'] = { 'zig' },
 					['vls'] = { 'vlang', 'v' },
+					['gleam'] = { 'gleam' },
 				}
 			}
 
@@ -84,6 +85,7 @@ return {
 					end,
 				}
 			}
+			require 'lspconfig'.gleam.setup {}
 
 			-- Autocompletion
 			local cmp = require 'cmp'
@@ -103,10 +105,21 @@ return {
 					['<C-Space>'] = cmp.mapping.complete(),
 					['<C-y>'] = cmp.mapping.confirm { select = true },
 					['<C-c>'] = cmp.mapping.abort(),
-					['<C-e>'] = cmp.mapping(
-						function()
+					-- Backup for <C-e>
+					['<C-k>'] = cmp.mapping(function()
+						if cmp.visible() then
 							cmp.select_prev_item { behavior = 'insert' }
-						end),
+						else
+							cmp.complete()
+						end
+					end),
+					['<C-e>'] = cmp.mapping(function()
+						if cmp.visible() then
+							cmp.select_prev_item { behavior = 'insert' }
+						else
+							cmp.complete()
+						end
+					end),
 					['<C-n>'] = cmp.mapping(function()
 						if cmp.visible() then
 							cmp.select_next_item { behavior = 'insert' }

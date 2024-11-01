@@ -25,11 +25,11 @@ local plugins = {
 		ft = 'vlang'
 	},
 	--> Platformio
-	{ 'normen/vim-pio',               cmd = "PIO" },
+	{ 'normen/vim-pio',       ft = { 'c', 'cpp' } },
+	{ 'benknoble/vim-racket', ft = 'racket' },
 
 	--> Colorscheme
-	{ 'sainnhe/sonokai',              lazy = true },
-	{ 'lifepillar/vim-colortemplate', cmd = 'Colortemplate' },
+	{ 'sainnhe/sonokai',      lazy = true },
 
 	--> Text editing
 	require 'treesitter_conf',
@@ -69,7 +69,7 @@ local plugins = {
 	require 'latex',
 
 	--> AI helper
-	{ 'exafunction/codeium.nvim', opts = {} },
+	-- { 'exafunction/codeium.nvim', opts = {} },
 
 	--> Space(macs|vim)-like keybinding preview
 	require 'which_key',
@@ -80,8 +80,8 @@ local plugins = {
 	--> Files
 	require 'neotree',
 	require 'harpoon1',
-	{ "aohoyd/broot.nvim",        opts = {} },
-	{ 'stevearc/oil.nvim',        opts = {}, cmd = 'Oil' },
+	{ "aohoyd/broot.nvim", opts = {} },
+	{ 'stevearc/oil.nvim', opts = {}, cmd = 'Oil' },
 
 	--> Fuzzy finders
 	require 'telescope_conf',
