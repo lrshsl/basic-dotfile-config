@@ -6,7 +6,7 @@ FontSize = 7.5
 require 'dropdown_terminal'
 TermLoadPreset(1)
 
-vim.cmd('set guifont=JetBrains\\ Mono\\ Thin:h' .. FontSize)
+vim.cmd('set guifont=JetBrains\\ Mono\\ ExtraLight:h' .. FontSize)
 --set guifont=Source\ Code\ Pro\ Light:h7.5
 
 --> Ligature test: -> 1/2 >= 0 |>
@@ -18,8 +18,10 @@ set exrc
 filetype plugin indent on
 syntax enable
 
+set termguicolors
+
 " Increment alphanumerical characters with <C-a> and <C-x>
-set nrformats=alpha
+"set nrformats=alpha
 
 " Appearance "
 set guicursor=n-v-c-sm-i-ci-ve:block,r-cr-o:hor20
@@ -28,11 +30,9 @@ set guicursor=n-v-c-sm-i-ci-ve:block,r-cr-o:hor20
 set nu rnu
 
 " Colors "
-set termguicolors
-
 let g:sonokai_transparent_background = 1
 colorscheme sonokai  " AFTER other settings
-hi NormalFloat guibg=#000000
+hi NormalFloat guibg=#0001
 
 "colorscheme bordeau
 
@@ -52,8 +52,6 @@ augroup TAB_VS_SPACES_AUGROUP
 
 	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :setlocal et! ts=4 sts=4 sw=4
 	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :setlocal list listchars=tab:->,trail:~,leadmultispace:·,nbsp:¤
-	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :inoremap ;err ERROR(F(""));<C-o>3h
-	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :inoremap ;info INFO(F(""));<C-o>3h
 	autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.hh,*.hpp   :inoremap ;f F("")<left><left>
 
 	autocmd BufNewFile,BufRead *.nim                      :setlocal et ts=2 sts=2 sw=2

@@ -5,149 +5,149 @@ local session_man = require 'session_manager'
 -- local harpoon = require 'harpoon'
 
 wk.add {
-	--> Leader mappings
-	{
-		{ '<space>m',  group = 'messages' },
-		{ '<space>ml', '<cmd>Noice last<CR>',        desc = 'Messages' },
-		{ '<space>mm', '<cmd>Noice history<CR>',     desc = 'History' },
-		{ '<space>md', '<cmd>Noice diagnostics<CR>', desc = 'Diagnostics' },
-		{ '<space>me', '<cmd>Noice errors<CR>',      desc = 'Noice Errors' },
+   --> Leader mappings
+   {
+      { '<space>m',  group = 'messages' },
+      { '<space>ml', '<cmd>Noice last<CR>',        desc = 'Messages' },
+      { '<space>mm', '<cmd>Noice history<CR>',     desc = 'History' },
+      { '<space>md', '<cmd>Noice diagnostics<CR>', desc = 'Diagnostics' },
+      { '<space>me', '<cmd>Noice errors<CR>',      desc = 'Noice Errors' },
 
-		--> File navigation
-		{ '<space>o',  group = 'open' },
-		{ '<space>oo', '<cmd>Neotree toggle<cr>',    desc = 'File Tree' },
-		{ '<space>od',
-			'<cmd>Trouble lsp_errors toggle focus=true win.position=right<CR>',
-			desc = 'Errors', silent = true, },
-		{ '<space>oD',
-			'<cmd>Trouble diagnostics toggle focus=true win.position=right<CR>',
-			desc = 'Diagnostics', silent = true, },
-		{ '<space>os',
-			':Trouble symbols toggle focus=true win.position=right<CR>',
-			desc = 'Bufffer symbols', silent = true, },
-		-- { '<leader>gh', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end },
-		-- { '<leader>ga', function() harpoon:list():append() end },
-		-- { '<leader>gj', function() harpoon:list():select(1) end },
-		-- { '<leader>gk', function() harpoon:list():select(2) end },
-		-- { '<leader>gl', function() harpoon:list():select(3) end },
-		-- { '<leader>g;', function() harpoon:list():select(4) end },
+      --> File navigation
+      { '<space>o',  group = 'open' },
+      { '<space>oo', '<cmd>Neotree toggle<cr>',    desc = 'File Tree' },
+      { '<space>od',
+         '<cmd>Trouble lsp_errors toggle focus=true win.position=right<CR>',
+         desc = 'Errors', silent = true, },
+      { '<space>oD',
+         '<cmd>Trouble diagnostics toggle focus=true win.position=right<CR>',
+         desc = 'Diagnostics', silent = true, },
+      { '<space>os',
+         ':Trouble symbols toggle focus=true win.position=right<CR>',
+         desc = 'Bufffer symbols', silent = true, },
+      -- { '<leader>gh', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end },
+      -- { '<leader>ga', function() harpoon:list():append() end },
+      -- { '<leader>gj', function() harpoon:list():select(1) end },
+      -- { '<leader>gk', function() harpoon:list():select(2) end },
+      -- { '<leader>gl', function() harpoon:list():select(3) end },
+      -- { '<leader>g;', function() harpoon:list():select(4) end },
 
-		--> Find
-		{ '<space>f',  group = 'find' },
-		{ '<space>fd', telescope.diagnostics,                                      desc = 'Find diagnostics' },
-		{ '<space>fr', telescope.lsp_references,                                   desc = 'Find References' },
-		{ '<space>fh', telescope.help_tags,                                        desc = 'Find Help' },
+      --> Find
+      { '<space>f',  group = 'find' },
+      { '<space>fd', telescope.diagnostics,                                      desc = 'Find diagnostics' },
+      { '<space>fr', telescope.lsp_references,                                   desc = 'Find References' },
+      { '<space>fh', telescope.help_tags,                                        desc = 'Find Help' },
 
-		{ '<space>fg', telescope.live_grep,                                        desc = 'Live grep' },
+      { '<space>fg', telescope.live_grep,                                        desc = 'Live grep' },
 
-		{ '<space>ft', telescope.find_files,                                       desc = 'Telescope find_files' },
-		{ '<space>ff', '<cmd>BrootWorkingDir<CR>',                                 desc = 'Find Files' },
-		{ '<space>fl', '<cmd>BrootCurrentDir<CR>',                                 desc = 'Find local Files' },
-		{ '<space>fa', '<cmd>Telescope find_files hidden=true<cr>',                desc = 'Find All Files (also hidden)' },
-		{ '<space>fA', '<cmd>Telescope find_files hidden=true no_ignore=true<cr>', desc = 'Find All Files (hidden & ignored)' },
-		{ '<space>fb', telescope.buffers,                                          desc = 'Find Buffers' },
-		{ '<space>fo', telescope.oldfiles,                                         desc = 'Open Recent File' },
+      { '<space>ft', telescope.find_files,                                       desc = 'Telescope find_files' },
+      { '<space>ff', '<cmd>BrootWorkingDir<CR>',                                 desc = 'Find Files' },
+      { '<space>fl', '<cmd>BrootCurrentDir<CR>',                                 desc = 'Find local Files' },
+      { '<space>fa', '<cmd>Telescope find_files hidden=true<cr>',                desc = 'Find All Files (also hidden)' },
+      { '<space>fA', '<cmd>Telescope find_files hidden=true no_ignore=true<cr>', desc = 'Find All Files (hidden & ignored)' },
+      { '<space>fb', telescope.buffers,                                          desc = 'Find Buffers' },
+      { '<space>fo', telescope.oldfiles,                                         desc = 'Open Recent File' },
 
-		{ '<space>fs', telescope.lsp_document_symbols,                             desc = 'Find Document Symbols' },
-		{ '<space>fS', telescope.symbols,                                          desc = 'Symbols' },
-		{ '<space>fw', telescope.lsp_dynamic_workspace_symbols,                    desc = 'Workspace Symbols' },
+      { '<space>fs', telescope.lsp_document_symbols,                             desc = 'Find Document Symbols' },
+      { '<space>fS', telescope.symbols,                                          desc = 'Symbols' },
+      { '<space>fw', telescope.lsp_dynamic_workspace_symbols,                    desc = 'Workspace Symbols' },
 
-		--> Session
-		{ '<space>s',  group = 'session' },
-		{ '<space>ss', session_man.save_current_session,                           desc = 'Save Session' },
-		{ '<space>sl', session_man.load_session,                                   desc = 'Load Session' },
-		{ '<space>sL', session_man.load_last_session,                              desc = 'Load Last Session' },
-		{ '<space>sd', session_man.delete_session,                                 desc = 'Delete Session' },
+      --> Session
+      { '<space>s',  group = 'session' },
+      { '<space>ss', session_man.save_current_session,                           desc = 'Save Session' },
+      { '<space>sl', session_man.load_session,                                   desc = 'Load Session' },
+      { '<space>sL', session_man.load_last_session,                              desc = 'Load Last Session' },
+      { '<space>sd', session_man.delete_session,                                 desc = 'Delete Session' },
 
-		--> Lsp
-		{ '<space>c',  group = 'code' },
-		{ '<space>ca', vim.lsp.buf.code_action,                                    desc = 'Code Action' },
-		{ '<space>ch', vim.lsp.buf.hover,                                          desc = 'Hover' },
-		{ '<space>cf', vim.lsp.buf.format,                                         desc = 'Format' },
-		{ '<space>cd', vim.diagnostic.open_float,                                  desc = 'Diagnostics' },
-		{ '<space>cr', function()
-			return ":IncRename " .. vim.fn.expand("<cword>")
-		end, desc = 'Rename', expr = true },
+      --> Lsp
+      { '<space>c',  group = 'code' },
+      { '<space>ca', vim.lsp.buf.code_action,                                    desc = 'Code Action' },
+      { '<space>ch', vim.lsp.buf.hover,                                          desc = 'Hover' },
+      { '<space>cf', vim.lsp.buf.format,                                         desc = 'Format' },
+      { '<space>cd', vim.diagnostic.open_float,                                  desc = 'Diagnostics' },
+      { '<space>cr', function()
+         return ":IncRename " .. vim.fn.expand("<cword>")
+      end, desc = 'Rename', expr = true },
 
-		--> Text editing
-		{ '<space>u',  'viw~',               desc = 'lower <-> UPPER' },
-		{ '<space>U',  'viW~',               desc = 'lower-word <-> UPPER-WORD' },
-		{ '<space>y',  '~<Left>',                 desc = '~' },
+      --> Text editing
+      { '<space>u',   'viw~',                          desc = 'lower <-> UPPER' },
+      { '<space>U',   'viW~',                          desc = 'lower-word <-> UPPER-WORD' },
+      { '<space>y',   '~<Left>',                       desc = '~' },
 
-		{ '<space>;c', group = "Change case" },
-		{ '<space>;cc', [[viw:s/\%V_\(\w\)/\u\1/g<CR>]], desc = "snake_case -> camelCase" }, -- \%V represents the visual selection boundary. If not specified, s operates linewise
-		{ '<space>;cs', [[viw:s/\%V\(\u\)/_\l\1/g<CR>]], desc = "camelCase -> snake_case" },
+      { '<space>;c',  group = "Change case" },
+      { '<space>;cc', [[viw:s/\%V_\(\w\)/\u\1/g<CR>]], desc = "snake_case -> camelCase" }, -- \%V represents the visual selection boundary. If not specified, s operates linewise
+      { '<space>;cs', [[viw:s/\%V\(\u\)/_\l\1/g<CR>]], desc = "camelCase -> snake_case" },
 
-		--> Buffer
-		{ '<space>w',   ':wa<CR>',                   desc = 'write buffers' },
-		{ '<space>q',   ':q<CR>',                    desc = 'quit buffer' },
-		{ '<space>;q',  ':qa<CR>',                   desc = 'quit all' },
+      --> Buffer
+      { '<space>w',   ':wa<CR>',                       desc = 'write buffers' },
+      { '<space>q',   ':q<CR>',                        desc = 'quit buffer' },
+      { '<space>;q',  ':qa<CR>',                       desc = 'quit all' },
 
-		--> Search and replace
-		{
-			mode = { 'n' },
-			{ '<space>*', ':%s/<C-r><C-w>/<C-r><C-w>/gc<Left><Left><Left>',
-				desc = 'Search and replace (cursor)' },
-			{ '<space>;s', ':%s//gc<Left><Left><Left>',           desc = 'Search and replace' },
-			{ '<space>f*', '*<cmd>Telescope live_grep<CR><C-r>/', desc = 'Live grep' },
+      --> Search and replace
+      {
+         mode = { 'n' },
+         { '<space>*', ':%s/<C-r><C-w>/<C-r><C-w>/gc<Left><Left><Left>',
+            desc = 'Search and replace (cursor)' },
+         { '<space>;s', ':%s//gc<Left><Left><Left>',           desc = 'Search and replace' },
+         { '<space>f*', '*<cmd>Telescope live_grep<CR><C-r>/', desc = 'Live grep' },
 
-		},
-		{
-			mode = { 'v' },
-			{ '<space>*',  ':s/<C-r><C-w>/<C-r><C-w>/g<Left><Left>', desc = 'Search and replace (cursor)' },
-			{ '<space>;s', [[:s/\%V/g<Left><Left>]],                      desc = 'Search and replace' },
-		},
-	},
+      },
+      {
+         mode = { 'v' },
+         { '<space>*',  ':s/<C-r><C-w>/<C-r><C-w>/g<Left><Left>', desc = 'Search and replace (cursor)' },
+         { '<space>;s', [[:s/\%V/g<Left><Left>]],                 desc = 'Search and replace' },
+      },
+   },
 
-	--> Non prefix mappings
-	{
-		mode = { 'n', 'v' },
-		{ 'j', desc = 'which_key_ignore' }, -- Colemak remaps
-		{ 'h', desc = 'Left' },
-		{ 'n', desc = 'Down' },
-		{ 'e', desc = 'Up' },
-		{ 'i', desc = 'Right' },
-		{ 'l', desc = 'Insert' },
-		{ 'k', desc = 'End of word' },
-		{ 'H', desc = 'Start of line (non-blank)' },
-		{ 'I', desc = 'End of line' },
+   --> Non prefix mappings
+   {
+      mode = { 'n', 'v' },
+      { 'j', desc = 'which_key_ignore' }, -- Colemak remaps
+      { 'h', desc = 'Left' },
+      { 'n', desc = 'Down' },
+      { 'e', desc = 'Up' },
+      { 'i', desc = 'Right' },
+      { 'l', desc = 'Insert' },
+      { 'k', desc = 'End of word' },
+      { 'H', desc = 'Start of line' },
+      { 'I', desc = 'End of line' },
 
-		{ '$', desc = 'which_key_ignore' }, -- Shift-mappings
-		{ '^', desc = 'which_key_ignore' },
-		{ '_', desc = 'which_key_ignore' },
-		{ '0', desc = 'Start of line' },
-	},
+      { '$', desc = 'which_key_ignore' }, -- Shift-mappings
+      { '^', desc = 'which_key_ignore' },
+      { '_', desc = 'which_key_ignore' },
+      { '0', desc = 'Start of line' },
+   },
 
-	{ '-',  '<cmd>Oil<cr>',   desc = 'Oil' },
+   { '-',  '<cmd>Oil<cr>',   desc = 'Oil' },
 
-	{
-		mode = { 'n' },
-		{ '<A-o>', '<cmd>ClangdSwitchSourceHeader<CR>', desc = 'Switch source/header' },
-	},
+   {
+      mode = { 'n' },
+      { '<A-o>', '<cmd>ClangdSwitchSourceHeader<CR>', desc = 'Switch source/header' },
+   },
 
-	--> Last macro
-	{ '\\', '@@',             desc = 'Last macro',              mode = 'n' },
-	{ '\\', ':normal @@<CR>', desc = 'Last macro on each line', mode = 'v' },
+   --> Last macro
+   { '\\', '@@',             desc = 'Last macro',              mode = 'n' },
+   { '\\', ':normal @@<CR>', desc = 'Last macro on each line', mode = 'v' },
 
-	--> Insert mode mappings
-	{
-		mode = { 'i' },
-		name = 'Abbreviations',
-		{ ';ae',  'ä',            desc = 'ä', },
-		{ ';Ae',  'Ä',            desc = 'Ä', },
-		{ ';AE',  'Ä',            desc = 'Ä', },
+   --> Insert mode mappings
+   {
+      mode = { 'i' },
+      name = 'Abbreviations',
+      { ';ae',  'ä',            desc = 'ä', },
+      { ';Ae',  'Ä',            desc = 'Ä', },
+      { ';AE',  'Ä',            desc = 'Ä', },
 
-		{ ';oe',  'ö',            desc = 'ö', },
-		{ ';Oe',  'Ö',            desc = 'Ö', },
-		{ ';OE',  'Ö',            desc = 'Ö', },
+      { ';oe',  'ö',            desc = 'ö', },
+      { ';Oe',  'Ö',            desc = 'Ö', },
+      { ';OE',  'Ö',            desc = 'Ö', },
 
-		{ ';ue',  'ü',            desc = 'ü', },
-		{ ';Ue',  'Ü',            desc = 'Ü', },
-		{ ';UE',  'Ü',            desc = 'Ü', },
+      { ';ue',  'ü',            desc = 'ü', },
+      { ';Ue',  'Ü',            desc = 'Ü', },
+      { ';UE',  'Ü',            desc = 'Ü', },
 
-		{ ';str', "&'static str", desc = "&'static str" },
-		{ ';l',   "'",            desc = "lifetime tick (')" }, -- Lifetimes (and still getting auto-close for '')
-	}
+      { ';str', "&'static str", desc = "&'static str" },
+      { ';l',   "'",            desc = "lifetime tick (')" }, -- Lifetimes (and still getting auto-close for '')
+   }
 }
 
 -- wk.show{
@@ -314,38 +314,38 @@ augroup END
 ]]
 
 local function exactly(keys)
-	return vim.api.nvim_replace_termcodes(keys, true, true, true)
+   return vim.api.nvim_replace_termcodes(keys, true, true, true)
 end
 
 local function get_shift_cr(language)
-	if language == 'rust' or language == 'c' or language == 'cpp' then
-		print 'rust'
-		return "\n;<left>", " // "
-	elseif language == "exas" then
-		return "\n,<left>", " | "
-	else
-		return "\n", "\n"
-	end
+   if language == 'rust' or language == 'c' or language == 'cpp' then
+      print 'rust'
+      return "\n;<left>", " // "
+   elseif language == "exas" then
+      return "\n,<left>", " | "
+   else
+      return "\n", "\n"
+   end
 end
 
 -- Function to map Shift-CR to custom behavior
 function CustomShiftCR()
-	local newline, begin_comment = get_shift_cr(vim.bo.filetype)
+   local newline, begin_comment = get_shift_cr(vim.bo.filetype)
 
-	-- Get the current line and cursor position
-	local line = vim.api.nvim_get_current_line()
-	local col = vim.fn.col('.')
+   -- Get the current line and cursor position
+   local line = vim.api.nvim_get_current_line()
+   local col = vim.fn.col('.')
 
-	-- Temporarily remove comment continuation
-	vim.opt_local.formatoptions = {}
+   -- Temporarily remove comment continuation
+   vim.opt_local.formatoptions = {}
 
-	-- If at the end of the line, begin a new line
-	local out = newline
-	if col <= #line then
-		-- Else insert a comment
-		out = '<esc>A' .. begin_comment
-	end
-	vim.api.nvim_feedkeys(exactly(out), 'n', false)
+   -- If at the end of the line, begin a new line
+   local out = newline
+   if col <= #line then
+      -- Else insert a comment
+      out = '<esc>A' .. begin_comment
+   end
+   vim.api.nvim_feedkeys(exactly(out), 'n', false)
 end
 
 Imap('<S-CR>', CustomShiftCR)
@@ -384,7 +384,7 @@ nnoremap cl cl
 nnoremap ci ci
 
 " Alias beginning and end of line "
-noremap <silent> H ^
+noremap <silent> H 0
 noremap <silent> I <end>
 
 " Jump Up/Down with Shift "

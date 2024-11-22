@@ -1,3 +1,5 @@
+" expandr syntax highlighting
+" author: lrshsl
 
 if v:version < 600
 	syntax clear
@@ -5,11 +7,11 @@ elseif exists('b:current_syntax')
 	finish
 endif
 
-syn keyword		exrDefine				df
+syn keyword		exrDefine				map df
 syn match		exrBecomes				"=>"
 
-syn region		exrOutString			start="'"		end="'"		contains=exrString,exrExpr
-syn region		exrOutMultiString		start="''''"	end="''''"	contains=exrString,exrExpr
+syn region		exrOutString			start="'"		end="'"		contains=exrExpr,exrString
+syn region		exrOutMultiString		start="''''"	end="''''"	contains=exrExpr,exrString
 syn region		exrString				start='"'		end='"'		contains=exrExpr
 syn region		exrExpr					start="\["		end="\W"
 syn match		exrExpr					"]"
